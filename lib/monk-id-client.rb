@@ -13,6 +13,7 @@ module MonkId
       user_hash = {
         email: opts[:email],
         password: opts[:password],
+        one_time_token: opts[:one_time_token],
         authentication_token: opts[:authentication_token]
       }.delete_if { |k, v| v.blank? }
 
