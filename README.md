@@ -6,7 +6,7 @@ Client for Monk ID.
 
 Add this line to your application's Gemfile:
 
-    gem 'monk-id-client'
+    gem 'monk-id-client', :git => 'https://github.com/MonkDev/monk-id-client.git'
 
 And then execute:
 
