@@ -13,6 +13,8 @@ module MonkId
       user_hash = {
         email: opts[:email],
         password: opts[:password],
+        first_name: opts[:first_name],
+        last_name: opts[:last_name],
         one_time_token: opts[:one_time_token],
         authentication_token: opts[:authentication_token]
       }.delete_if { |k, v| v.blank? }
@@ -31,16 +33,12 @@ module MonkId
 
     # The following methods do not require a user authentication token.
 
-    # Opts may contain:
+    # Opts must contain:
     #   {
-    #     email: New email to update the user
-    #     password: New password for this user
+    #     email: [required] New email to update the user
+    #     password: [required] New password for this user
     #   }
     #
-
-    def register!(opts)
-      api_request(:post, '/api/users', opts)
-    end
 
     def login!(opts)
       api_request(:post, '/api/users/sign_in', opts)
@@ -50,12 +48,27 @@ module MonkId
       api_request(:post, '/api/users/password', opts)
     end
 
+    # Register opts may contain:
+    #   {
+    #     email: [required] New email to update the user
+    #     password: [required] New password for this user
+    #     first_name: [optional] first name of user,
+    #     last_name: [optional] last name of user,
+    #   }
+    #
+
+    def register!(opts)
+      api_request(:post, '/api/users', opts)
+    end
+
     # The following methods require a user authentication token.
 
     # Opts may contain:
     #   {
-    #     email: New email to update the user
-    #     password: New password for this user
+    #     email: [required] New email to update the user
+    #     password: [required] New password for this user
+    #     first_name: [optional] first name of user,
+    #     last_name: [optional] last name of user,
     #     authentication_token: REQUIRED - authentication_token for this user
     #   }
     #
