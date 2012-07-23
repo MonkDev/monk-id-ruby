@@ -8,10 +8,12 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
+    ffi (1.1.0)
     json (1.7.3)
-    mime-types (1.18)
-    typhoeus (0.3.3)
-      mime-types
+    mime-types (1.19)
+    typhoeus (0.4.2)
+      ffi (~> 1.0)
+      mime-types (~> 1.18)
 
 PLATFORMS
   ruby
