@@ -15,6 +15,9 @@ module MonkId
         password: opts[:password],
         first_name: opts[:first_name],
         last_name: opts[:last_name],
+        birth_day: opts[:birth_day],
+        birth_month: opts[:birth_day],
+        birth_year: opts[:birth_day],
         one_time_token: opts[:one_time_token],
         authentication_token: opts[:authentication_token]
       }.delete_if { |k, v| v.blank? }
@@ -27,7 +30,7 @@ module MonkId
 
     # FIXME: Disable this once MonkID has a real SSL cert.
     def api_request(method, path, opts)
-      response = Typhoeus::Request.send(method.to_sym, endpoint + path, params: user_params(opts), disable_ssl_peer_verification: true)
+      response = Typhoeus::Request.send(method.to_sym, endpoint + path, params: user_params(opts), ssl_verifypeer: false)
       JSON.parse(response.body)
     end
 
@@ -54,6 +57,9 @@ module MonkId
     #     password: [required] New password for this user
     #     first_name: [optional] first name of user,
     #     last_name: [optional] last name of user,
+    #     birth_day: [optional] birth day of user,
+    #     birth_month: [optional] birth month of user,
+    #     birth_year: [optional] birth year of user,
     #   }
     #
 
@@ -62,13 +68,18 @@ module MonkId
     end
 
     # The following methods require a user authentication token.
+    # The update method allows for updating any of the user's PII,
+    # and those fields only take effect in the update! method.
 
     # Opts may contain:
     #   {
     #     email: [required] New email to update the user
     #     password: [required] New password for this user
     #     first_name: [optional] first name of user,
-    #     last_name: [optional] last name of user,
+    #     last_name: [optional] last name of  user,
+    #     birth_day: [optional] birth day of user,
+    #     birth_month: [optional] birth month of user,
+    #     birth_year: [optional] birth year ouser,
     #     authentication_token: REQUIRED - authentication_token for this user
     #   }
     #

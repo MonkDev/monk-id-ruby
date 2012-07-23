@@ -42,7 +42,7 @@ List of possible error codes:
 
 All usage of monk-id-client is through class methods. 
 
-Registering a user (you can also pass in first_name and last_name):
+Registering a user (you can also pass in first_name, last_name, birth_day, birth_month, and birth_year):
     
     MonkId.register!(:email => 'some@email.com', :password => 'somepassword')
 
@@ -56,7 +56,7 @@ Sending password reset instructions:
 
 NOTE: you need an authentication token for the following methods.
 
-Updating a user's PII (first name, last name, email, etc.).:
+Updating a user's PII (first name, last name, email, birth_day, etc.).:
 
     MonkId.update!(:email => 'hey@you.com', :authentication_token => '123456')
 
