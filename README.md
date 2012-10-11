@@ -38,6 +38,11 @@ List of possible error codes:
     :short_password => 4,
     :blank_password => 5,
 
+
+#### UUID
+
+All users will be identified by a global UID, which is returned as the 'guid' attribute. If you are storing users locally, use this ID to tie them to their Monk ID user.
+
 ### Interaction
 
 All usage of monk-id-client is through class methods. 
