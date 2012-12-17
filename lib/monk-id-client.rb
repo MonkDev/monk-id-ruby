@@ -1,3 +1,5 @@
+require 'typhoeus'
+
 module MonkId
   class << self
     def config
