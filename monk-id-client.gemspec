@@ -15,6 +15,6 @@ Gem::Specification.new do |gem|
   gem.require_paths = ["lib"]
   gem.version       = Monk::Id::Client::VERSION
 
-  gem.add_dependency('json')
-  gem.add_dependency('typhoeus')
+  gem.add_runtime_dependency 'json'
+  gem.add_runtime_dependency 'typhoeus', '~> 0.5.0'
 end
