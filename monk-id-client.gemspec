@@ -6,7 +6,7 @@ Gem::Specification.new do |gem|
   gem.email         = ["rohan.deshpande@gmail.com"]
   gem.description   = %q{Ruby client to interface with Monk ID}
   gem.summary       = %q{Ruby client to interface with Monk ID}
-  gem.homepage      = ""
+  gem.homepage      = "https://github.com/MonkDev/monk-id-client/"
 
   gem.files         = `git ls-files`.split($\)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
