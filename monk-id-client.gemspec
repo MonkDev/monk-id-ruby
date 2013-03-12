@@ -16,5 +16,5 @@ Gem::Specification.new do |gem|
   gem.version       = Monk::Id::Client::VERSION
 
   gem.add_runtime_dependency 'json'
-  gem.add_runtime_dependency 'typhoeus', '~> 0.5.0'
+  gem.add_runtime_dependency 'typhoeus', '~> 0.6.0'
 end
