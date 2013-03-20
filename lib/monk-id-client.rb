@@ -1,9 +1,14 @@
 require 'typhoeus'
+require 'yaml'
 
 module MonkId
   class << self
     def config
-      @@_config ||= YAML.load_file(File.join(Rails.root, 'config', 'monkid.yml'))[Rails.env]
+      if defined? Rails
+        @@_config ||= YAML.load_file(File.join(Rails.root, 'config', 'monkid.yml'))[Rails.env]
+      else
+        @@_config ||= YAML.load_file(ENV["MONKID_CONFIG"])[ENV["MONKID_ENV"]]
+      end
     end
 
     def endpoint
@@ -22,7 +27,7 @@ module MonkId
         birth_year: opts[:birth_day],
         one_time_token: opts[:one_time_token],
         authentication_token: opts[:authentication_token]
-      }.delete_if { |k, v| v.blank? }
+      }.delete_if { |k, v| v.nil? }
 
       {
         api_key: MonkId.config['api_key'],
