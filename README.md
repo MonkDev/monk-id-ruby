@@ -16,7 +16,20 @@ Or install it yourself as:
 
     $ gem install monk-id-client
 
-Then, create a 'monkid.yml' file in your Rails config/ directory. Reference the sample monkid.yml for information.
+### Rails
+
+Create a 'monkid.yml' file in your Rails config/ directory. Reference the sample monkid.yml for information.
+
+### Ruby
+
+Make sure that you create a 'monkid.yml' file and set the following two environment variables:
+
+```
+ENV["MONKID_CONFIG"] = '/path/to/monkid.yml'
+ENV["MONKID_ENV"] = 'production|development'
+```
+
+Reference the sample monkid.yml for information.
 
 ## Usage
 
@@ -45,14 +58,14 @@ All users will be identified by a global UID, which is returned as the 'guid' at
 
 ### Interaction
 
-All usage of monk-id-client is through class methods. 
+All usage of monk-id-client is through class methods.
 
 Registering a user (you can also pass in first_name, last_name, birth_day, birth_month, and birth_year):
-    
+
     MonkId.register!(:email => 'some@email.com', :password => 'somepassword')
 
 Logging in a user (email and password are required):
-    
+
     MonkId.login!(:email => 'some@email.com', :password => 'somepassword')
 
 Sending password reset instructions:
