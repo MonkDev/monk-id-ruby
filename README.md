@@ -1,12 +1,12 @@
-# Monk::Id::Client
+# Monk ID Client
 
-Client for Monk ID.
+Ruby client for [Monk ID](https://id.monkdev.com/).
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
-    gem 'monk-id-client', :git => 'https://github.com/MonkDev/monk-id-client.git'
+    gem 'monk-id-client'
 
 And then execute:
 
@@ -16,9 +16,9 @@ Or install it yourself as:
 
     $ gem install monk-id-client
 
-### Rails
+## Config
 
-Create a 'monkid.yml' file in your Rails config/ directory. Reference the sample monkid.yml for information.
+The first step is to add the `monkid.yml` configuration file into your app. See the example file at `config/monkid.sample.yml`. The structure is similar to that of database.yml: specify a set of configuration options for a given environment. You MUST supply an api key (provided to you) to perform any of the below commands. All possible options are in the example yml file.
 
 ### Rails / Sinatra
 
@@ -35,9 +35,7 @@ Place `monkid.yml` (reference `config/monkid.sample.yml` for more information) i
 
 ### Overview
 
-The first step is to embed the monkid.yml configuration file into your Rails tree. You can copy the example file into RAILS_ROOT/config. The structure is similar to that of database.yml - specify a set of configuration options for a given environment. You MUST supply an api key (provided to you) to perform any of the below commands. All possible options are in the example yml file.
-
-You will also receive both a status_key and status_code attribute that provides for a descriptive response. For example, if you try to register with an email that exists:
+You will receive both a `status_key` and `status_code` attribute that provides for a descriptive response. For example, if you try to register with an email that exists:
 
      => {"success"=>false, "status_key"=>"email_exists", "status_code"=>2}
 
@@ -52,9 +50,9 @@ List of possible error codes:
     :blank_password => 5,
 
 
-#### UUID
+### UUID
 
-All users will be identified by a global UID, which is returned as the 'guid' attribute. If you are storing users locally, use this ID to tie them to their Monk ID user.
+All users will be identified by a global UID, which is returned as the `guid` attribute. If you are storing users locally, use this ID to tie them to their Monk ID user.
 
 ### Interaction
 
@@ -78,7 +76,7 @@ Updating a user:
 
     MonkId.update!(:email => 'hey@you.com', :authentication_token => '123456')
 
-Checking on their status (return a full hash containing all the user's info):
+Checking a user's status (return a full hash containing all the user's info):
 
     MonkId.status(:authentication_token => '123123')
 
