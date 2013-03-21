@@ -20,16 +20,16 @@ Or install it yourself as:
 
 Create a 'monkid.yml' file in your Rails config/ directory. Reference the sample monkid.yml for information.
 
+### Rails / Sinatra
+
+Place `monkid.yml` in your `config` directory. Reference `config/monkid.sample.yml` for more information.
+
 ### Ruby
 
-Make sure that you create a 'monkid.yml' file and set the following two environment variables:
+Place `monkid.yml` (reference `config/monkid.sample.yml` for more information) in a directory of your choosing and set the following two environment variables:
 
-```
-ENV["MONKID_CONFIG"] = '/path/to/monkid.yml'
-ENV["MONKID_ENV"] = 'production|development'
-```
-
-Reference the sample monkid.yml for information.
+    ENV['MONKID_CONFIG'] = '/path/to/monkid.yml'
+    ENV['MONKID_ENV'] = 'production|development'
 
 ## Usage
 

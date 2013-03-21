@@ -3,11 +3,18 @@ require 'yaml'
 
 module MonkId
   class << self
+
+    def config_file
+      'config/monkid.yml'
+    end
+
     def config
       if defined? Rails
-        @@_config ||= YAML.load_file(File.join(Rails.root, 'config', 'monkid.yml'))[Rails.env]
+        @@_config ||= YAML.load_file(File.join(Rails.root, config_file))[Rails.env]
+      elsif defined? Sinatra
+        @@_config ||= YAML.load_file(File.join(settings.root, config_file))[settings.environment]
       else
-        @@_config ||= YAML.load_file(ENV["MONKID_CONFIG"])[ENV["MONKID_ENV"]]
+        @@_config ||= YAML.load_file(ENV['MONKID_CONFIG'])[ENV['MONKID_ENV']]
       end
     end
 
