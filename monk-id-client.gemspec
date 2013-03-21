@@ -17,4 +17,5 @@ Gem::Specification.new do |gem|
 
   gem.add_runtime_dependency 'json'
   gem.add_runtime_dependency 'typhoeus', '~> 0.6.0'
+  gem.add_development_dependency 'rspec', '~> 2.13.0'
 end
