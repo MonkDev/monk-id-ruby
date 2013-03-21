@@ -60,7 +60,7 @@ All users will be identified by a global UID, which is returned as the 'guid' at
 
 All usage of monk-id-client is through class methods.
 
-Registering a user (you can also pass in first_name, last_name, birth_day, birth_month, and birth_year):
+Registering a user:
 
     MonkId.register!(:email => 'some@email.com', :password => 'somepassword')
 
@@ -74,7 +74,7 @@ Sending password reset instructions:
 
 NOTE: you need an authentication token for the following methods.
 
-Updating a user's PII (first name, last name, email, birth_day, etc.).:
+Updating a user:
 
     MonkId.update!(:email => 'hey@you.com', :authentication_token => '123456')
 

@@ -27,11 +27,6 @@ module MonkId
       user_hash = {
         email: opts[:email],
         password: opts[:password],
-        first_name: opts[:first_name],
-        last_name: opts[:last_name],
-        birth_day: opts[:birth_day],
-        birth_month: opts[:birth_day],
-        birth_year: opts[:birth_day],
         one_time_token: opts[:one_time_token],
         authentication_token: opts[:authentication_token]
       }.delete_if { |k, v| v.nil? }
