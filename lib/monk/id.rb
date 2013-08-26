@@ -36,7 +36,7 @@ module Monk
           payload = encoded_payload[COOKIE_NAME]
         end
 
-        return {} unless payload
+        return @@payload = {} unless payload
 
         begin
           payload = decode_payload(payload)
