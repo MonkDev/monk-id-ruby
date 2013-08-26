@@ -1,93 +1,38 @@
-# Monk ID Client
+Monk ID Ruby
+============
 
-Ruby client for [Monk ID](https://id.monkdev.com/).
+Add to your `Gemfile`:
 
-## Installation
+```ruby
+gem 'monk-id', :github => 'MonkDev/monk-id-client', :branch => 'next'
+```
 
-Add this line to your application's Gemfile:
+For Rails and Sinatra, copy `config/monkid.sample.yml` in this repository to
+`config/monkid.yml` in your app. This will be loaded automatically. All other
+apps need to load their config explicitly:
 
-    gem 'monk-id-client'
+```ruby
+Monk::Id.load_config('/path/to/monkid.yml', 'development')
+```
 
-And then execute:
+Next, load the payload:
 
-    $ bundle
+```ruby
+Monk::Id.load_payload(params[:monk_id_payload])
+```
 
-Or install it yourself as:
+Or, if using the `cookie` option, simply pass in a hash-like cookies object:
 
-    $ gem install monk-id-client
+```ruby
+Monk::Id.load_payload(cookies)
+```
 
-## Config
+Then you can access the user's ID and email:
 
-The first step is to add the `monkid.yml` configuration file into your app. See the example file at `config/monkid.sample.yml`. The structure is similar to that of database.yml: specify a set of configuration options for a given environment. You MUST supply an api key (provided to you) to perform any of the below commands. All possible options are in the example yml file.
+```ruby
+Monk::Id.user_id
+Monk::Id.user_email
+```
 
-### Rails / Sinatra
-
-Place `monkid.yml` in your `config` directory. Reference `config/monkid.sample.yml` for more information.
-
-### Ruby
-
-Place `monkid.yml` (reference `config/monkid.sample.yml` for more information) in a directory of your choosing and set the following two environment variables:
-
-    ENV['MONKID_CONFIG'] = '/path/to/monkid.yml'
-    ENV['MONKID_ENV'] = 'production|development'
-
-## Usage
-
-### Overview
-
-You will receive both a `status_key` and `status_code` attribute that provides for a descriptive response. For example, if you try to register with an email that exists:
-
-     => {"success"=>false, "status_key"=>"email_exists", "status_code"=>2}
-
-List of possible error codes:
-
-    :unknown_error => -1,
-    :success => 0,
-    :invalid_email => 1,
-    :email_exists => 2,
-    :invalid_password => 3,
-    :short_password => 4,
-    :blank_password => 5,
-
-
-### UUID
-
-All users will be identified by a global UID, which is returned as the `guid` attribute. If you are storing users locally, use this ID to tie them to their Monk ID user.
-
-### Interaction
-
-All usage of monk-id-client is through class methods.
-
-Registering a user:
-
-    MonkId.register!(:email => 'some@email.com', :password => 'somepassword')
-
-Logging in a user (email and password are required):
-
-    MonkId.login!(:email => 'some@email.com', :password => 'somepassword')
-
-Sending password reset instructions:
-
-    MonkId.send_password_reset_instructions!(:email => 'hey@forgotit.com')
-
-NOTE: you need an authentication token for the following methods.
-
-Updating a user:
-
-    MonkId.update!(:email => 'hey@you.com', :authentication_token => '123456')
-
-Checking a user's status (return a full hash containing all the user's info):
-
-    MonkId.status(:authentication_token => '123123')
-
-Logging a user out:
-
-    MonkId.logout!(:authentication_token => '123123')
-
-## Contributing
-
-1. Fork it
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Added some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create new Pull Request
+`nil` is returned if the user isn't signed in or the payload can't be decoded
+and verified.

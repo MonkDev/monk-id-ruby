@@ -1,7 +1,11 @@
-# Configuration file for the MonkID registration service
-#
 development:
-  host: a_host
-  port: 443
-  api_key: someapikey
-  ssl: true
+  app_id: YOUR_APP_ID
+  app_secret: YOUR_APP_SECRET
+
+staging:
+  app_id: YOUR_APP_ID
+  app_secret: YOUR_APP_SECRET
+
+production:
+  app_id: YOUR_APP_ID
+  app_secret: YOUR_APP_SECRET
