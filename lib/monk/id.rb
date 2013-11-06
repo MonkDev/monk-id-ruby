@@ -56,6 +56,10 @@ module Monk
         payload_user :email
       end
 
+      def signed_in?
+        !!user_id
+      end
+
       protected
 
       def config
