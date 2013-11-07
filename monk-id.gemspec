@@ -5,7 +5,7 @@ require 'monk/id/version'
 
 Gem::Specification.new do |spec|
   spec.name          = 'monk-id'
-  spec.version       = Monk::Id::VERSION
+  spec.version       = Monk::Id::VERSION.dup
   spec.authors       = ['Monk Development, Inc.']
   spec.email         = ['support@monkdevelopment.com']
   spec.description   = 'Monk ID Ruby library.'
