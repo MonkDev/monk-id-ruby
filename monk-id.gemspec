@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ['support@monkdevelopment.com']
   spec.description   = 'Monk ID Ruby library.'
   spec.summary       = spec.description
-  spec.homepage      = 'https://github.com/MonkDev/monk-id-client'
+  spec.homepage      = 'https://github.com/MonkDev/monk-id-ruby'
   spec.license       = 'MIT'
 
   spec.files         = `git ls-files`.split($/)

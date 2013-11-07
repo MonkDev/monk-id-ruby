@@ -6,7 +6,7 @@ Full API docs: http://monkdev.github.io/monk-id-ruby/Monk/Id.html
 Add to your `Gemfile`:
 
 ```ruby
-gem 'monk-id', :github => 'MonkDev/monk-id-client', :branch => 'next'
+gem 'monk-id', :github => 'MonkDev/monk-id-ruby', :branch => 'next'
 ```
 
 For Rails and Sinatra, copy `config/monk_id.sample.yml` in this repository to
