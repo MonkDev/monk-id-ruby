@@ -1,6 +1,8 @@
 Monk ID Ruby
 ============
 
+Full API docs: http://monkdev.github.io/monk-id-ruby/Monk/Id.html
+
 Add to your `Gemfile`:
 
 ```ruby
