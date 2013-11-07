@@ -7,12 +7,12 @@ Add to your `Gemfile`:
 gem 'monk-id', :github => 'MonkDev/monk-id-client', :branch => 'next'
 ```
 
-For Rails and Sinatra, copy `config/monkid.sample.yml` in this repository to
+For Rails and Sinatra, copy `config/monk_id.sample.yml` in this repository to
 `config/monkid.yml` in your app. This will be loaded automatically. All other
 apps need to load their config explicitly:
 
 ```ruby
-Monk::Id.load_config('/path/to/monkid.yml', 'development')
+Monk::Id.load_config('/path/to/monk_id.yml', 'development')
 ```
 
 Next, load the payload:
