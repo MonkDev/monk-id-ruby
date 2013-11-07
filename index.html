@@ -1,0 +1,105 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII" />
+<title>
+  File: README
+  
+    &mdash; Documentation by YARD 0.8.7.3
+  
+</title>
+
+  <link rel="stylesheet" href="css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '';
+  framesUrl = "frames.html#!" + escape(window.location.href);
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div id="header">
+      <div id="menu">
+  
+    <a href="_index.html">Index</a> &raquo; 
+    <span class="title">File: README</span>
+  
+
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="class_list.html">
+      Class List
+    </a>
+  
+    <a class="full_list_link" id="method_list_link"
+        href="method_list.html">
+      Method List
+    </a>
+  
+    <a class="full_list_link" id="file_list_link"
+        href="file_list.html">
+      File List
+    </a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+
+    <iframe id="search_frame"></iframe>
+
+    <div id="content"><div id='filecontents'><h1>Monk ID Ruby</h1>
+
+<p>Add to your <code>Gemfile</code>:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_gem'>gem</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>monk-id</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='symbol'>:github</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>MonkDev/monk-id-client</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='symbol'>:branch</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>next</span><span class='tstring_end'>'</span></span>
+</code></pre>
+
+<p>For Rails and Sinatra, copy <code>config/monkid.sample.yml</code> in this repository to
+<code>config/monkid.yml</code> in your app. This will be loaded automatically. All other
+apps need to load their config explicitly:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='const'>Monk</span><span class='op'>::</span><span class='const'>Id</span><span class='period'>.</span><span class='id identifier rubyid_load_config'>load_config</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>/path/to/monkid.yml</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>development</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
+</code></pre>
+
+<p>Next, load the payload:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='const'>Monk</span><span class='op'>::</span><span class='const'>Id</span><span class='period'>.</span><span class='id identifier rubyid_load_payload'>load_payload</span><span class='lparen'>(</span><span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:monk_id_payload</span><span class='rbracket'>]</span><span class='rparen'>)</span>
+</code></pre>
+
+<p>Or, if using the <code>cookie</code> option, simply pass in a hash-like cookies object:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='const'>Monk</span><span class='op'>::</span><span class='const'>Id</span><span class='period'>.</span><span class='id identifier rubyid_load_payload'>load_payload</span><span class='lparen'>(</span><span class='id identifier rubyid_cookies'>cookies</span><span class='rparen'>)</span>
+</code></pre>
+
+<p>Then you can access the user&#39;s ID and email:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='const'>Monk</span><span class='op'>::</span><span class='const'>Id</span><span class='period'>.</span><span class='id identifier rubyid_user_id'>user_id</span>
+<span class='const'>Monk</span><span class='op'>::</span><span class='const'>Id</span><span class='period'>.</span><span class='id identifier rubyid_user_email'>user_email</span>
+</code></pre>
+
+<p><code>nil</code> is returned if the user isn&#39;t signed in or the payload can&#39;t be decoded
+and verified.</p>
+</div></div>
+
+    <div id="footer">
+  Generated on Thu Nov  7 10:03:20 2013 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.8.7.3 (ruby-1.9.3).
+</div>
+
+  </body>
+</html>
