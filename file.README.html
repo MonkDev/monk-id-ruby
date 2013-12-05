@@ -63,16 +63,18 @@
 
     <div id="content"><div id='filecontents'><h1>Monk ID Ruby</h1>
 
+<p>Full API docs: <a href="http://monkdev.github.io/monk-id-ruby/Monk/Id.html">http://monkdev.github.io/monk-id-ruby/Monk/Id.html</a></p>
+
 <p>Add to your <code>Gemfile</code>:</p>
 
-<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_gem'>gem</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>monk-id</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='symbol'>:github</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>MonkDev/monk-id-client</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='symbol'>:branch</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>next</span><span class='tstring_end'>'</span></span>
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_gem'>gem</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>monk-id</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='symbol'>:github</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>MonkDev/monk-id-ruby</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='symbol'>:branch</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>next</span><span class='tstring_end'>'</span></span>
 </code></pre>
 
-<p>For Rails and Sinatra, copy <code>config/monkid.sample.yml</code> in this repository to
+<p>For Rails and Sinatra, copy <code>config/monk_id.sample.yml</code> in this repository to
 <code>config/monkid.yml</code> in your app. This will be loaded automatically. All other
 apps need to load their config explicitly:</p>
 
-<pre class="code ruby"><code class="ruby"><span class='const'>Monk</span><span class='op'>::</span><span class='const'>Id</span><span class='period'>.</span><span class='id identifier rubyid_load_config'>load_config</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>/path/to/monkid.yml</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>development</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
+<pre class="code ruby"><code class="ruby"><span class='const'>Monk</span><span class='op'>::</span><span class='const'>Id</span><span class='period'>.</span><span class='id identifier rubyid_load_config'>load_config</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>/path/to/monk_id.yml</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>development</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
 </code></pre>
 
 <p>Next, load the payload:</p>
@@ -96,7 +98,7 @@ and verified.</p>
 </div></div>
 
     <div id="footer">
-  Generated on Thu Nov  7 10:03:20 2013 by
+  Generated on Thu Dec  5 15:48:08 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.3 (ruby-1.9.3).
 </div>

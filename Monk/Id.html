@@ -188,6 +188,30 @@ root directory.</p>
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#config-class_method" title="config (class method)">+ (*) <strong>config</strong>(key) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Get a config value.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#load_config-class_method" title="load_config (class method)">+ (Hash&lt;String&gt;) <strong>load_config</strong>(path = nil, environment = nil) </a>
     
 
@@ -203,7 +227,7 @@ root directory.</p>
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Load a config for a specific environment.</p>
+<p>Load a YAML config file for a specific environment.</p>
 </div></span>
   
 </li>
@@ -315,7 +339,109 @@ root directory.</p>
 
     
       <div class="method_details first">
-  <h3 class="signature first" id="load_config-class_method">
+  <h3 class="signature first" id="config-class_method">
+  
+    + (<tt>*</tt>) <strong>config</strong>(key) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Get a config value. Attempts to load the config if it hasn't already been
+loaded.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>key</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>Name of config value.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>*</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>Config value.</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Raises:</p>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>StandardError</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>If the config can’t be loaded.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+57
+58
+59
+60
+61</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/monk/id.rb', line 57</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_config'>config</span><span class='lparen'>(</span><span class='id identifier rubyid_key'>key</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_load_config'>load_config</span> <span class='kw'>unless</span> <span class='cvar'>@@config</span>
+
+  <span class='cvar'>@@config</span><span class='lbracket'>[</span><span class='id identifier rubyid_key'>key</span><span class='rbracket'>]</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="load_config-class_method">
   
     + (<tt>Hash&lt;String&gt;</tt>) <strong>load_config</strong>(path = nil, environment = nil) 
   
@@ -326,9 +452,9 @@ root directory.</p>
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Load a config for a specific environment. Rails and Sinatra apps don't need
-to call this method if the config file is stored at <span class='object_link'><a href="#CONFIG_FILE-constant" title="Monk::Id::CONFIG_FILE (constant)">CONFIG_FILE</a></span>, as it's
-loaded automatically.</p>
+<p>Load a YAML config file for a specific environment. Rails and Sinatra apps
+don't need to call this method if the config file is stored at
+<span class='object_link'><a href="#CONFIG_FILE-constant" title="Monk::Id::CONFIG_FILE (constant)">CONFIG_FILE</a></span>, as it's loaded automatically.</p>
 
 
   </div>
@@ -350,7 +476,7 @@ loaded automatically.</p>
       
         &mdash;
         <div class='inline'>
-<p>Path of config file to load. Leave `nil` to read from environment’s
+<p>Path of YAML config file to load. Leave `nil` to read from environment’s
 `MONK_ID_CONFIG` value.</p>
 </div>
       
@@ -533,27 +659,27 @@ verification.</p>
       <pre class="lines">
 
 
-57
-58
-59
-60
-61
-62
-63
-64
-65
-66
-67
-68
 69
 70
 71
 72
 73
-74</pre>
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/monk/id.rb', line 57</span>
+      <pre class="code"><span class="info file"># File 'lib/monk/id.rb', line 69</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_load_payload'>load_payload</span><span class='lparen'>(</span><span class='id identifier rubyid_encoded_payload'>encoded_payload</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_encoded_payload'>encoded_payload</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span> <span class='const'>String</span>
@@ -622,12 +748,12 @@ verification.</p>
       <pre class="lines">
 
 
-95
-96
-97</pre>
+107
+108
+109</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/monk/id.rb', line 95</span>
+      <pre class="code"><span class="info file"># File 'lib/monk/id.rb', line 107</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_signed_in?'>signed_in?</span>
   <span class='op'>!</span><span class='op'>!</span><span class='id identifier rubyid_user_id'>user_id</span>
@@ -695,12 +821,12 @@ verification.</p>
       <pre class="lines">
 
 
-88
-89
-90</pre>
+100
+101
+102</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/monk/id.rb', line 88</span>
+      <pre class="code"><span class="info file"># File 'lib/monk/id.rb', line 100</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_user_email'>user_email</span>
   <span class='id identifier rubyid_payload_user'>payload_user</span> <span class='symbol'>:email</span>
@@ -768,12 +894,12 @@ verification.</p>
       <pre class="lines">
 
 
-80
-81
-82</pre>
+92
+93
+94</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/monk/id.rb', line 80</span>
+      <pre class="code"><span class="info file"># File 'lib/monk/id.rb', line 92</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_user_id'>user_id</span>
   <span class='id identifier rubyid_payload_user'>payload_user</span> <span class='symbol'>:id</span>
@@ -788,7 +914,7 @@ verification.</p>
 </div>
 
     <div id="footer">
-  Generated on Thu Nov  7 10:03:20 2013 by
+  Generated on Thu Dec  5 15:48:08 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.3 (ruby-1.9.3).
 </div>
