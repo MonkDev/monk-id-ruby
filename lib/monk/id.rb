@@ -48,6 +48,18 @@ module Monk
         @@config = config
       end
 
+      # Get a config value. Attempts to load the config if it hasn't already
+      # been loaded.
+      #
+      # @param  key [String] Name of config value.
+      # @raise  [StandardError] If the config can't be loaded.
+      # @return [*] Config value.
+      def config(key)
+        load_config unless @@config
+
+        @@config[key]
+      end
+
       # Load a payload from the client-side.
       #
       # @param  encoded_payload [String, #[]] Encoded payload or Hash-like
@@ -104,14 +116,6 @@ module Monk
       # Loaded payload.
       @@payload = nil
 
-      # Get all config values. Attempts to load the config if it hasn't already
-      # been loaded.
-      #
-      # @return [Hash<String>] All config values.
-      def config
-        @@config || load_config
-      end
-
       # Verify that a config has all the required values.
       #
       # @param  config [Hash<String>] Config values.
@@ -142,7 +146,7 @@ module Monk
         payload_clone = payload.clone
         payload_clone[:user].delete(:signature)
 
-        OpenSSL::HMAC.digest(OpenSSL::Digest::SHA512.new, config['app_secret'], JSON.generate(payload_clone[:user]))
+        OpenSSL::HMAC.digest(OpenSSL::Digest::SHA512.new, config('app_secret'), JSON.generate(payload_clone[:user]))
       end
 
       # Verify that a payload hasn't been tampered with or faked by comparing
