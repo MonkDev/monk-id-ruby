@@ -18,12 +18,12 @@ module Monk
     COOKIE_NAME = '_monkIdPayload'.freeze
 
     class << self
-      # Load a config for a specific environment. Rails and Sinatra apps don't
-      # need to call this method if the config file is stored at {CONFIG_FILE},
-      # as it's loaded automatically.
+      # Load a YAML config file for a specific environment. Rails and Sinatra
+      # apps don't need to call this method if the config file is stored at
+      # {CONFIG_FILE}, as it's loaded automatically.
       #
-      # @param  path [String] Path of config file to load. Leave `nil` to read
-      #         from environment's `MONK_ID_CONFIG` value.
+      # @param  path [String] Path of YAML config file to load. Leave `nil` to
+      #         read from environment's `MONK_ID_CONFIG` value.
       # @param  environment [String] Environment section to use. Leave `nil` to
       #         read from environment's `MONK_ID_ENV` value. Defaults to
       #         `development`.
