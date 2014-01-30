@@ -33,6 +33,10 @@ module Monk
         verify_config
       end
 
+      def configure
+        yield configuration if block_given?
+      end
+
       # Memoized getter for configuration.
       def configuration
         @configuration ||= Configuration.new
