@@ -28,7 +28,7 @@ module Monk
       #         read from environment's `MONK_ID_ENV` value.
       # @raise  [StandardError] If the configuration is not valid after loading.
       # @return [Hash<String>] Loaded config values.
-      def load_config(path = nil, environment = nil)
+      def load_config(path = nil, environment = 'development')
         configuration.load_with_file(path, environment)
         verify_config
       end
