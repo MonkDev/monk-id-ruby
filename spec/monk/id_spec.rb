@@ -11,6 +11,7 @@ describe Monk::Id do
   it { should respond_to :user_email }
   it { should respond_to :config }
   it { should respond_to :signed_in? }
+  it { should respond_to :configuration }
 
   describe "initialization" do
   end
@@ -124,6 +125,22 @@ describe Monk::Id do
       it "returns the value for that key" do
         expect(Monk::Id.config('app_secret')).to eq @app_secret
       end
+    end
+  end
+
+  describe ".configure" do
+    it "yields with the currently set Configuration object as an argument" do
+      config = Monk::Id::Configuration.new
+      Monk::Id.configuration = config
+      expect { |b| Monk::Id.configure(&b) }.to yield_with_args(config)
+    end
+
+    it "can set configuration variables through a passed block" do
+      app_secret_value = "This is the new app_secret"
+      Monk::Id.configure do |config|
+        config.app_secret = app_secret_value
+      end
+      expect(Monk::Id.config('app_secret')).to be app_secret_value
     end
   end
 end
