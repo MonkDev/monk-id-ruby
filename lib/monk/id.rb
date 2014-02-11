@@ -109,7 +109,6 @@ module Monk
       # @raise  [RuntimeError] If invalid.
       # @return [true] If valid.
       def verify_config
-        raise 'MonkId Configuration is not valid' unless configuration.is_a? Configuration
         raise 'No `app_id` config value set' unless config('app_id')
         raise 'No `app_secret` config value set' unless config('app_secret')
         true

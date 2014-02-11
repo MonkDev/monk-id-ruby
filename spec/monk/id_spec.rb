@@ -79,14 +79,6 @@ describe Monk::Id do
       end
     end
 
-    context "when the config file is not loaded properly" do
-      before { YAML.stub(:load_file).and_return({}) }
-
-      it "raises an error saying 'no config loaded' " do
-        expect { Monk::Id.load_config }.to raise_error 'no config loaded'
-      end
-    end
-
     context "when the config loaded from the file does not contain a 'app_id' key" do
       before do
         without_id = valid_config_hash.reject { |k, v| k == 'app_id' }
