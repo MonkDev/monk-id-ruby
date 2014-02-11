@@ -37,7 +37,7 @@ module Monk
 
         def get_environment
           if defined? Rails
-            File.join(Rails.root, CONFIG_FILE)
+            Rails.env
           elsif defined? Sinatra
             Sinatra::Application.settings.environment.to_s
           else
