@@ -18,6 +18,7 @@ describe Monk::Id do
   describe ".load_config" do
     context "when the gem is included in a Rails app" do
       before do
+        Monk::Id.configuration
         class ::Rails
         end
         @rails_root = '/rails/root'
@@ -42,6 +43,7 @@ describe Monk::Id do
 
     context "when the gem is included in a Sinatra app" do
       before do
+        Monk::Id.configuration
         module Sinatra
           module Application
           end
@@ -81,23 +83,27 @@ describe Monk::Id do
 
     context "when the config loaded from the file does not contain a 'app_id' key" do
       before do
-        without_id = valid_config_hash.reject { |k, v| k == 'app_id' }
-        YAML.stub(:load_file).and_return('development' => without_id)
+        Monk::Id.configuration.app_id = nil
+        Monk::Id.configuration.app_secret = "App Secret"
       end
 
       it "raises an error saying 'no `app_id` config value'" do
-        expect { Monk::Id.load_config }.to raise_error 'no `app_id` config value'
+        expect { Monk::Id.load_config }
+        .to raise_error 'No `app_id` config value set'
       end
+
+      after { Monk::Id.configuration.app_id = @app_id }
     end
 
     context "when the config loaded from the file does not contain a 'app_secret' key" do
       before do
-       without_secret = valid_config_hash.reject { |k, v| k == 'app_secret' }
-       YAML.stub(:load_file).and_return('development' => without_secret)
-     end
+       Monk::Id.configuration.app_id = "App ID"
+       Monk::Id.configuration.app_secret = nil
+      end
 
       it "raises an error saying 'no `app_secret` config value'" do
-        expect { Monk::Id.load_config }.to raise_error 'no `app_secret` config value'
+        expect { Monk::Id.load_config }
+        .to raise_error 'No `app_secret` config value set'
       end
     end
   end
