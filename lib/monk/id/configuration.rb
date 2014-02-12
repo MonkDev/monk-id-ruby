@@ -49,9 +49,9 @@ module Monk
           begin
             yaml_config = YAML.load_file(path)[environment]
           rescue Errno::ENOENT
-            puts "WARNING: YAML configuration file not found at supplied path: #{path}"
+            raise "WARNING: YAML configuration file not found at supplied path: #{path}"
           rescue Psych::SyntaxError
-            puts "WARNING: YAML configuration file at #{path} has invalid syntax"
+            raise "WARNING: YAML configuration file at #{path} has invalid syntax"
           end
           yaml_config || { }
         end
