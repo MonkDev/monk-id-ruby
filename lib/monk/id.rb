@@ -2,6 +2,7 @@ require 'base64'
 require 'json'
 require 'openssl'
 require 'yaml'
+require File.expand_path("../id/configuration.rb", __FILE__)
 
 # Global Monk namespace.
 module Monk
@@ -10,54 +11,43 @@ module Monk
   #
   # @author Monk Development, Inc.
   module Id
-    # Expected path of config file in Rails and Sinatra relative to the app's
-    # root directory.
-    CONFIG_FILE = 'config/monk_id.yml'.freeze
-
     # Name of the cookie that (optionally) stores the payload.
     COOKIE_NAME = '_monkIdPayload'.freeze
 
     class << self
+      attr_accessor :configuration
+
       # Load a YAML config file for a specific environment. Rails and Sinatra
       # apps don't need to call this method if the config file is stored at
-      # {CONFIG_FILE}, as it's loaded automatically.
+      # {CONFIG_FILE}, as it's loaded automatically. Warnings will be logged to
+      # STDOUT if YAML file path is broken or syntax is invalid.
       #
       # @param  path [String] Path of YAML config file to load. Leave `nil` to
       #         read from environment's `MONK_ID_CONFIG` value.
       # @param  environment [String] Environment section to use. Leave `nil` to
-      #         read from environment's `MONK_ID_ENV` value. Defaults to
-      #         `development`.
-      # @raise  [StandardError] If the file doesn't exist or can't be read.
+      #         read from environment's `MONK_ID_ENV` value.
+      # @raise  [StandardError] If the configuration is not valid after loading.
       # @return [Hash<String>] Loaded config values.
-      def load_config(path = nil, environment = nil)
-        if defined? Rails
-          path ||= File.join(Rails.root, CONFIG_FILE)
-          environment ||= Rails.env
-        elsif defined? Sinatra
-          path ||= File.join(Sinatra::Application.settings.root, CONFIG_FILE)
-          environment ||= Sinatra::Application.settings.environment.to_s
-        else
-          path ||= ENV['MONK_ID_CONFIG']
-          environment ||= ENV['MONK_ID_ENV'] || 'development'
-        end
-
-        config = YAML.load_file(path)[environment]
-
-        verify_config(config)
-
-        @@config = config
+      def load_config(path = nil, environment = 'development')
+        configuration.load_with_file(path, environment)
+        verify_config
       end
 
-      # Get a config value. Attempts to load the config if it hasn't already
-      # been loaded.
+      def configure
+        yield configuration if block_given?
+      end
+
+      # Memoized getter for configuration.
+      def configuration
+        @configuration ||= Configuration.new
+      end
+
+      # Get a config value.
       #
       # @param  key [String] Name of config value.
-      # @raise  [StandardError] If the config can't be loaded.
       # @return [*] Config value.
       def config(key)
-        load_config unless @@config
-
-        @@config[key]
+        configuration.send(key)
       end
 
       # Load a payload from the client-side.
@@ -110,9 +100,6 @@ module Monk
 
     protected
 
-      # Loaded config values.
-      @@config = nil
-
       # Loaded payload.
       @@payload = nil
 
@@ -121,11 +108,9 @@ module Monk
       # @param  config [Hash<String>] Config values.
       # @raise  [RuntimeError] If invalid.
       # @return [true] If valid.
-      def verify_config(config)
-        raise 'no config loaded' unless config
-        raise 'no `app_id` config value' unless config['app_id']
-        raise 'no `app_secret` config value' unless config['app_secret']
-
+      def verify_config
+        raise 'No `app_id` config value set' unless config('app_id')
+        raise 'No `app_secret` config value set' unless config('app_secret')
         true
       end
 

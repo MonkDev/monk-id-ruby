@@ -1,0 +1,146 @@
+require 'spec_helper'
+
+describe Monk::Id do
+  RELATIVE_APP_PATH = 'config/monk_id.yml'
+  let(:valid_config_hash) { {'app_id' => 'AN APP ID',
+                             'app_secret' => 'A SECRET'} }
+
+  it { should respond_to :load_config }
+  it { should respond_to :load_payload }
+  it { should respond_to :user_id }
+  it { should respond_to :user_email }
+  it { should respond_to :config }
+  it { should respond_to :signed_in? }
+  it { should respond_to :configuration }
+
+  describe "initialization" do
+  end
+
+  describe ".load_config" do
+    context "when the gem is included in a Rails app" do
+      before do
+        Monk::Id.configuration
+        class ::Rails
+        end
+        @rails_root = '/rails/root'
+        @rails_environment = 'development'
+        Rails.stub(:root) { @rails_root }
+        Rails.stub(:env) { @rails_environment }
+        Monk::Id.stub(:verify_config) { true }
+      end
+
+      it "loads the appropriate environment configuration from a file at #{RELATIVE_APP_PATH} relative to Rails root" do
+        loaded_hash = {}
+        expect(loaded_hash).to receive(:[]).with(@rails_environment)
+                                            .and_return(valid_config_hash)
+        expect(YAML).to receive(:load_file)
+                        .with(File.join(@rails_root, RELATIVE_APP_PATH))
+                        .and_return(loaded_hash)
+        Monk::Id.load_config
+      end
+
+      after { Object.send(:remove_const, :Rails) }
+    end
+
+    context "when the gem is included in a Sinatra app" do
+      before do
+        Monk::Id.configuration
+        module Sinatra
+          module Application
+          end
+        end
+        @sinatra_root = '/sinatra/root'
+        @sinatra_environment = 'development'
+        Sinatra::Application.stub_chain(:settings, :root) { @sinatra_root }
+        Sinatra::Application.stub_chain(:settings, :environment) { @sinatra_environment }
+      end
+
+      it "loads the appropriate environment configuration from a file at #{RELATIVE_APP_PATH} relative to Sinatra root" do
+        loaded_hash = {}
+        expect(loaded_hash).to receive(:[])
+                               .with(@sinatra_environment)
+                               .and_return(valid_config_hash)
+        expect(YAML).to receive(:load_file)
+                        .with(File.join(@sinatra_root, RELATIVE_APP_PATH))
+                        .and_return(loaded_hash)
+        Monk::Id.load_config
+      end
+
+      after { Object.send(:remove_const, :Sinatra) }
+    end
+
+    context "when path to config file and an environment are passed as arguments" do
+      it "loads the config file at that path and the environment options from it" do
+        path = '/test/path.yml'
+        environment = 'development'
+        loaded_hash = {}
+        expect(loaded_hash).to receive(:[])
+                               .with(environment)
+                               .and_return(valid_config_hash)
+        YAML.should_receive(:load_file).with(path).and_return(loaded_hash)
+        Monk::Id.load_config(path, environment)
+      end
+    end
+
+    context "when the config loaded from the file does not contain a 'app_id' key" do
+      before do
+        Monk::Id.configuration.app_id = nil
+        Monk::Id.configuration.app_secret = "App Secret"
+      end
+
+      it "raises an error saying 'no `app_id` config value'" do
+        expect { Monk::Id.load_config }
+        .to raise_error 'No `app_id` config value set'
+      end
+
+      after { Monk::Id.configuration.app_id = @app_id }
+    end
+
+    context "when the config loaded from the file does not contain a 'app_secret' key" do
+      before do
+       Monk::Id.configuration.app_id = "App ID"
+       Monk::Id.configuration.app_secret = nil
+      end
+
+      it "raises an error saying 'no `app_secret` config value'" do
+        expect { Monk::Id.load_config }
+        .to raise_error 'No `app_secret` config value set'
+      end
+    end
+  end
+
+  describe ".config(key)" do
+    context "when the config is properly loaded" do
+      before do
+        @app_secret = 'THIS IS THE EXPECTED SECRET VALUE'
+        path = 'fake_path.yml'
+        environment = 'development'
+        environment_hash = valid_config_hash.dup
+        environment_hash['app_secret'] = @app_secret
+        YAML.stub(:load_file).with(path)
+            .and_return('development' => environment_hash)
+        Monk::Id.load_config(path, environment)
+      end
+
+      it "returns the value for that key" do
+        expect(Monk::Id.config('app_secret')).to eq @app_secret
+      end
+    end
+  end
+
+  describe ".configure" do
+    it "yields with the currently set Configuration object as an argument" do
+      config = Monk::Id::Configuration.new
+      Monk::Id.configuration = config
+      expect { |b| Monk::Id.configure(&b) }.to yield_with_args(config)
+    end
+
+    it "can set configuration variables through a passed block" do
+      app_secret_value = "This is the new app_secret"
+      Monk::Id.configure do |config|
+        config.app_secret = app_secret_value
+      end
+      expect(Monk::Id.config('app_secret')).to be app_secret_value
+    end
+  end
+end

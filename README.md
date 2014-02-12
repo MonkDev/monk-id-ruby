@@ -8,15 +8,25 @@ Full API docs: http://monkdev.github.io/monk-id-ruby/Monk/Id.html
 Add to your `Gemfile`:
 
 ```ruby
-gem 'monk-id', :github => 'MonkDev/monk-id-ruby', :branch => 'next'
+gem 'monk-id', :github => 'MonkDev/monk-id-ruby', :branch => 'dev'
 ```
 
 For Rails and Sinatra, copy `config/monk_id.sample.yml` in this repository to
-`config/monkid.yml` in your app. This will be loaded automatically. All other
+`config/monk_id.yml` in your app. This will be loaded automatically. All other
 apps need to load their config explicitly:
 
 ```ruby
 Monk::Id.load_config('/path/to/monk_id.yml', 'development')
+```
+
+Alternatively, you can also configure using a block and forgo using a separate
+YAML file:
+
+```ruby
+Monk::Id.configure do |config|
+  config.app_id = 'YOUR APP ID here'
+  config.app_secret = 'YOUR APP SECRET here'
+end
 ```
 
 Next, load the payload:
