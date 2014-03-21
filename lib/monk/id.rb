@@ -23,23 +23,16 @@ module Monk
       # {CONFIG_FILE}, as it's loaded automatically.
       #
       # @param  path [String] Path of YAML config file to load. Leave `nil` to
-      #         read from environment's `MONK_ID_CONFIG` value.
+      #         read from environment (`MONK_ID_CONFIG` variable, Rails,
+      #         Sinatra).
       # @param  environment [String] Environment section to use. Leave `nil` to
-      #         read from environment's `MONK_ID_ENV` value. Defaults to
-      #         `development`.
+      #         read from environment (`MONK_ID_ENV` variable, Rails, Sinatra).
+      #         Defaults to `development`.
       # @raise  [StandardError] If the file doesn't exist or can't be read.
       # @return [Hash<String>] Loaded config values.
       def load_config(path = nil, environment = nil)
-        if defined? Rails
-          path ||= File.join(Rails.root, CONFIG_FILE)
-          environment ||= Rails.env
-        elsif defined? Sinatra
-          path ||= File.join(Sinatra::Application.settings.root, CONFIG_FILE)
-          environment ||= Sinatra::Application.settings.environment.to_s
-        else
-          path ||= ENV['MONK_ID_CONFIG']
-          environment ||= ENV['MONK_ID_ENV'] || 'development'
-        end
+        path ||= config_path_from_environment
+        environment ||= config_environment
 
         config = YAML.load_file(path)[environment]
 
@@ -115,6 +108,37 @@ module Monk
 
       # Loaded payload.
       @@payload = nil
+
+      # Get the path to the config file from the environment. Supports `ENV`
+      # variable, Rails, and Sinatra.
+      # 
+      # @return [String] Path to the config file.
+      # @return [nil] If not set by the environment.
+      def config_path_from_environment
+        if ENV['MONK_ID_CONFIG']
+          ENV['MONK_ID_CONFIG']
+        elsif defined? Rails
+          File.join(Rails.root, CONFIG_FILE)
+        elsif defined? Sinatra
+          File.join(Sinatra::Application.settings.root, CONFIG_FILE)
+        end
+      end
+
+      # Get the environment to load within the config. Supports `ENV` variable,
+      # Rails, and Sinatra. Defaults to `development` if none specify.
+      # 
+      # @return [String] Environment name.
+      def config_environment
+        if ENV['MONK_ID_ENV']
+          ENV['MONK_ID_ENV']
+        elsif defined? Rails
+          Rails.env
+        elsif defined? Sinatra
+          Sinatra::Application.settings.environment.to_s
+        else
+          'development'
+        end
+      end
 
       # Verify that a config has all the required values.
       #
