@@ -8,7 +8,7 @@ Gem::Specification.new do |spec|
   spec.version       = Monk::Id::VERSION.dup
   spec.authors       = ['Monk Development, Inc.']
   spec.email         = ['support@monkdevelopment.com']
-  spec.description   = 'Integrate Monk ID on the server-side by accessing payloads from the client-side JavaScript.'
+  spec.description   = 'Integrate Monk ID authentication and single sign-on for apps and websites on the server-side.'
   spec.summary       = spec.description
   spec.homepage      = 'https://github.com/MonkDev/monk-id-ruby'
   spec.license       = 'MIT'
