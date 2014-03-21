@@ -3,6 +3,8 @@ require 'json'
 require 'openssl'
 require 'yaml'
 
+require 'monk/id/version'
+
 # Global Monk namespace.
 module Monk
   # Integrate Monk ID on the server-side by accessing payloads from the
