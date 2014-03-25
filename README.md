@@ -27,6 +27,10 @@ Add the gem to your `Gemfile` if using [Bundler](http://bundler.io):
 gem 'monk-id'
 ```
 
+```bash
+$ bundle
+```
+
 Or install manually:
 
 ```bash
@@ -85,3 +89,101 @@ Monk::Id.user_email
 
 `nil` is returned if the user isn't signed in or the payload can't be decoded
 and verified.
+
+Development
+-----------
+
+Start by installing the development dependencies with Bundler:
+
+```bash
+$ bundle
+```
+
+This requires all subsequent commands be prepended with `bundle exec`, which has
+been ommitted for conciseness.
+
+During development, changes must be tested manually since an automated test
+suite does not yet exist. This is best done by requiring the library locally in
+an app or website that integrates it already. There are a few ways to do this.
+
+### With Bundler
+
+Not to be confused with the fact that Bundler is used for development of this
+library, if Bundler is used in the test app or website, you can either specify a
+path to the library locally:
+
+```ruby
+gem 'monk-id', :path => '/path/to/monk-id-ruby'
+```
+
+Or configure Bundler to use a local repository instead of the GitHub repository
+(more details [in the documentation](http://bundler.io/v1.5/git.html#local)):
+
+```ruby
+gem 'monk-id', :github => 'MonkDev/monk-id-ruby', :branch => 'master'
+```
+
+```bash
+$ bundle config local.monk-id /path/to/monk-id-ruby
+```
+
+### Without Bundler
+
+If Bundler is not used, you can either build and install the gem as a system
+gem (this must be done for every change):
+
+```bash
+$ rake install
+```
+
+```ruby
+require 'monk/id'
+```
+
+Or require the library directly:
+
+```ruby
+require '/path/to/monk-id-ruby/lib/monk/id'
+```
+
+### Documentation
+
+[YARD](http://yardoc.org) is used for code documentation. During development,
+you can preview as you document by starting the YARD server:
+
+```bash
+$ yard server --reload
+```
+
+This hosts the documentation at http://localhost:8808 and automatically watches
+for changes on page refresh.
+
+The documentation can also be built to a `doc` directory (that is ignored by
+git):
+
+```bash
+$ yard
+```
+
+Deployment
+----------
+
+[gem-release](https://github.com/svenfuchs/gem-release) is used to
+
+1.  bump the version in `lib/monk/id/version.rb`,
+2.  tag and push the release to GitHub,
+3.  and release to [RubyGems](https://rubygems.org).
+
+These steps can be executed individually, but it's easiest to do all at once:
+
+```bash
+$ gem bump --version major|minor|patch --tag --release
+```
+
+Be sure to choose the correct version by following
+[Semantic Versioning](http://semver.org).
+
+### Publish Documentation
+
+After releasing a new version, the documentation must be manually built and
+published to the `gh-pages` branch.
