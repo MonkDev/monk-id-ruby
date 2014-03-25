@@ -65,31 +65,78 @@
 
 <p><a href="http://badge.fury.io/rb/monk-id"><img src="https://badge.fury.io/rb/monk-id.png" alt="Gem Version"></a></p>
 
-<p>Full API docs: <a href="http://monkdev.github.io/monk-id-ruby/Monk/Id.html">http://monkdev.github.io/monk-id-ruby/Monk/Id.html</a></p>
+<p>Integrate Monk ID authentication and single sign-on for apps and websites on the
+server-side.</p>
 
-<p>Add to your <code>Gemfile</code>:</p>
+<ul>
+<li>  <a href="http://monkdev.github.io/monk-id-ruby/Monk/Id.html">Documentation</a></li>
+</ul>
 
-<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_gem'>gem</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>monk-id</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='symbol'>:github</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>MonkDev/monk-id-ruby</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='symbol'>:branch</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>next</span><span class='tstring_end'>'</span></span>
+<h2>Overview</h2>
+
+<p>Monk ID authentication and single sign-on works in the browser by integrating
+<a href="https://github.com/MonkDev/monk-id-js">Monk ID JS</a>. Only being able to check
+whether a user is signed in on the client-side is limiting, however, which is
+where this library is helpful. It takes a payload from the client-side
+JavaScript and decodes it for access in your Ruby code. There is no Monk ID API
+that can be accessed on the server-side, so this library depends on client-side
+integration.</p>
+
+<h3>Install</h3>
+
+<p>Add the gem to your <code>Gemfile</code> if using <a href="http://bundler.io">Bundler</a>:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_gem'>gem</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>monk-id</span><span class='tstring_end'>'</span></span>
 </code></pre>
 
-<p>For Rails and Sinatra, copy <code>config/monk_id.sample.yml</code> in this repository to
-<code>config/monkid.yml</code> in your app. This will be loaded automatically. All other
-apps need to load their config explicitly:</p>
+<pre class="code bash"><code class="bash">$ bundle
+</code></pre>
+
+<p>Or install manually:</p>
+
+<pre class="code bash"><code class="bash">$ gem install monk-id
+</code></pre>
+
+<h3>Configure</h3>
+
+<p>Configuration is done in an external YAML file. There&#39;s a sample file in this
+repository: <code>config/monk_id.sample.yml</code>.</p>
+
+<p>Rails and Sinatra apps need only copy this file to <code>config/monk_id.yml</code> for it
+to be loaded automatically.</p>
+
+<p>All other apps need to load the file explicitly:</p>
 
 <pre class="code ruby"><code class="ruby"><span class='const'>Monk</span><span class='op'>::</span><span class='const'>Id</span><span class='period'>.</span><span class='id identifier rubyid_load_config'>load_config</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>/path/to/monk_id.yml</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>development</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
 </code></pre>
 
-<p>Next, load the payload:</p>
+<p>Remember, replace the sample values with your own, and keep the file safe as it
+contains your app secret.</p>
 
-<pre class="code ruby"><code class="ruby"><span class='const'>Monk</span><span class='op'>::</span><span class='const'>Id</span><span class='period'>.</span><span class='id identifier rubyid_load_payload'>load_payload</span><span class='lparen'>(</span><span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:monk_id_payload</span><span class='rbracket'>]</span><span class='rparen'>)</span>
-</code></pre>
+<h3>Access</h3>
 
-<p>Or, if using the <code>cookie</code> option, simply pass in a hash-like cookies object:</p>
+<p>If you have Monk ID JS configured to store the payload automatically in a cookie
+(the default), simply pass a hash-like cookies object to load the payload from:</p>
 
 <pre class="code ruby"><code class="ruby"><span class='const'>Monk</span><span class='op'>::</span><span class='const'>Id</span><span class='period'>.</span><span class='id identifier rubyid_load_payload'>load_payload</span><span class='lparen'>(</span><span class='id identifier rubyid_cookies'>cookies</span><span class='rparen'>)</span>
 </code></pre>
 
-<p>Then you can access the user&#39;s ID and email:</p>
+<p>The encoded payload can also be passed directly, which is useful if you&#39;re
+sending it in a GET/POST request instead:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='const'>Monk</span><span class='op'>::</span><span class='const'>Id</span><span class='period'>.</span><span class='id identifier rubyid_load_payload'>load_payload</span><span class='lparen'>(</span><span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:monk_id_payload</span><span class='rbracket'>]</span><span class='rparen'>)</span>
+</code></pre>
+
+<p>Loading the payload must be done before trying to access any values stored in
+the payload. In Rails, this usually means placing it in a <code>before_action</code> in
+your <code>ApplicationController</code>.</p>
+
+<p>Once the payload is loaded, you can ask whether the user is signed in:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='const'>Monk</span><span class='op'>::</span><span class='const'>Id</span><span class='period'>.</span><span class='id identifier rubyid_signed_in?'>signed_in?</span>
+</code></pre>
+
+<p>Or for their ID and email:</p>
 
 <pre class="code ruby"><code class="ruby"><span class='const'>Monk</span><span class='op'>::</span><span class='const'>Id</span><span class='period'>.</span><span class='id identifier rubyid_user_id'>user_id</span>
 <span class='const'>Monk</span><span class='op'>::</span><span class='const'>Id</span><span class='period'>.</span><span class='id identifier rubyid_user_email'>user_email</span>
@@ -97,10 +144,98 @@ apps need to load their config explicitly:</p>
 
 <p><code>nil</code> is returned if the user isn&#39;t signed in or the payload can&#39;t be decoded
 and verified.</p>
+
+<h2>Development</h2>
+
+<p>Start by installing the development dependencies with Bundler:</p>
+
+<pre class="code bash"><code class="bash">$ bundle
+</code></pre>
+
+<p>This requires all subsequent commands be prepended with <code>bundle exec</code>, which has
+been ommitted for conciseness.</p>
+
+<p>During development, changes must be tested manually since an automated test
+suite does not yet exist. This is best done by requiring the library locally in
+an app or website that integrates it already. There are a few ways to do this.</p>
+
+<h3>With Bundler</h3>
+
+<p>Not to be confused with the fact that Bundler is used for development of this
+library, if Bundler is used in the test app or website, you can either specify a
+path to the library locally:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_gem'>gem</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>monk-id</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='symbol'>:path</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>/path/to/monk-id-ruby</span><span class='tstring_end'>'</span></span>
+</code></pre>
+
+<p>Or configure Bundler to use a local repository instead of the GitHub repository
+(more details <a href="http://bundler.io/v1.5/git.html#local">in the documentation</a>):</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_gem'>gem</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>monk-id</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='symbol'>:github</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>MonkDev/monk-id-ruby</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='symbol'>:branch</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>master</span><span class='tstring_end'>'</span></span>
+</code></pre>
+
+<pre class="code bash"><code class="bash">$ bundle config local.monk-id /path/to/monk-id-ruby
+</code></pre>
+
+<h3>Without Bundler</h3>
+
+<p>If Bundler is not used, you can either build and install the gem as a system
+gem (this must be done for every change):</p>
+
+<pre class="code bash"><code class="bash">$ rake install
+</code></pre>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>monk/id</span><span class='tstring_end'>'</span></span>
+</code></pre>
+
+<p>Or require the library directly:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>/path/to/monk-id-ruby/lib/monk/id</span><span class='tstring_end'>'</span></span>
+</code></pre>
+
+<h3>Documentation</h3>
+
+<p><a href="http://yardoc.org">YARD</a> is used for code documentation. During development,
+you can preview as you document by starting the YARD server:</p>
+
+<pre class="code bash"><code class="bash">$ yard server --reload
+</code></pre>
+
+<p>This hosts the documentation at <a href="http://localhost:8808">http://localhost:8808</a> and automatically watches
+for changes on page refresh.</p>
+
+<p>The documentation can also be built to a <code>doc</code> directory (that is ignored by
+git):</p>
+
+<pre class="code bash"><code class="bash">$ yard
+</code></pre>
+
+<h2>Deployment</h2>
+
+<p><a href="https://github.com/svenfuchs/gem-release">gem-release</a> is used to</p>
+
+<ol>
+<li> bump the version in <code>lib/monk/id/version.rb</code>,</li>
+<li> tag and push the release to GitHub,</li>
+<li> and release to <a href="https://rubygems.org">RubyGems</a>.</li>
+</ol>
+
+<p>These steps can be executed individually, but it&#39;s easiest to do all at once:</p>
+
+<pre class="code bash"><code class="bash">$ gem bump --version major|minor|patch --tag --release
+</code></pre>
+
+<p>Be sure to choose the correct version by following
+<a href="http://semver.org">Semantic Versioning</a>.</p>
+
+<h3>Publish Documentation</h3>
+
+<p>After releasing a new version, the documentation must be manually built and
+published to the <code>gh-pages</code> branch.</p>
 </div></div>
 
     <div id="footer">
-  Generated on Tue Feb 11 14:14:26 2014 by
+  Generated on Tue Mar 25 17:07:22 2014 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.3 (ruby-1.9.3).
 </div>
