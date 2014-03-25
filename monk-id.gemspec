@@ -20,6 +20,7 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency 'bundler', '~> 1.5'
   spec.add_development_dependency 'gem-release', '~> 0.7'
-  spec.add_development_dependency 'rake'
-  spec.add_development_dependency 'yard'
+  spec.add_development_dependency 'rake', '~> 10.1'
+  spec.add_development_dependency 'yard', '~> 0.8'
+  spec.add_development_dependency 'redcarpet', '~> 3.1'
 end
