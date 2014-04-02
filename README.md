@@ -2,6 +2,7 @@ Monk ID Ruby
 ============
 
 [![Gem Version](https://badge.fury.io/rb/monk-id.png)](http://badge.fury.io/rb/monk-id)
+[![Code Climate](https://codeclimate.com/github/MonkDev/monk-id-ruby.png)](https://codeclimate.com/github/MonkDev/monk-id-ruby)
 
 Integrate Monk ID authentication and single sign-on for apps and websites on the
 server-side.
@@ -164,6 +165,12 @@ git):
 ```bash
 $ yard
 ```
+
+### Quality
+
+[Code Climate](https://codeclimate.com) is setup to perform continuous code
+quality inspection on every commit. The quality badge is displayed at the top of
+this README, with the [full report available here](https://codeclimate.com/github/MonkDev/monk-id-ruby).
 
 Deployment
 ----------
