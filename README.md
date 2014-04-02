@@ -3,6 +3,7 @@ Monk ID Ruby
 
 [![Gem Version](https://badge.fury.io/rb/monk-id.png)](http://badge.fury.io/rb/monk-id)
 [![Code Climate](https://codeclimate.com/github/MonkDev/monk-id-ruby.png)](https://codeclimate.com/github/MonkDev/monk-id-ruby)
+[![Dependency Status](https://gemnasium.com/MonkDev/monk-id-ruby.svg)](https://gemnasium.com/MonkDev/monk-id-ruby)
 
 Integrate Monk ID authentication and single sign-on for apps and websites on the
 server-side.
