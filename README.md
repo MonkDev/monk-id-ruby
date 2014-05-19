@@ -104,11 +104,30 @@ $ bundle
 This requires all subsequent commands be prepended with `bundle exec`, which has
 been ommitted for conciseness.
 
-During development, changes must be tested manually since an automated test
-suite does not yet exist. This is best done by requiring the library locally in
-an app or website that integrates it already. There are a few ways to do this.
+### Tests
 
-### With Bundler
+Testing is done with [RSpec](https://relishapp.com/rspec). To run the tests:
+
+```bash
+$ rspec
+```
+
+[Guard](http://guardgem.org) is also configured to run the tests on changes to
+the code/tests:
+
+```bash
+$ guard
+```
+
+[SimpleCov](https://github.com/colszowka/simplecov) automatically generates a
+code coverage report to the `coverage` directory on every run of the test suite.
+
+#### Manual
+
+While the test suite is complete, it's not a bad idea to also test changes
+manually in real-world integrations.
+
+##### With Bundler
 
 Not to be confused with the fact that Bundler is used for development of this
 library, if Bundler is used in the test app or website, you can either specify a
@@ -129,7 +148,7 @@ gem 'monk-id', :github => 'MonkDev/monk-id-ruby', :branch => 'master'
 $ bundle config local.monk-id /path/to/monk-id-ruby
 ```
 
-### Without Bundler
+#### Without Bundler
 
 If Bundler is not used, you can either build and install the gem as a system
 gem (this must be done for every change):
@@ -160,7 +179,7 @@ $ yard server --reload
 This hosts the documentation at http://localhost:8808 and automatically watches
 for changes on page refresh.
 
-The documentation can also be built to a `doc` directory (that is ignored by
+The documentation can also be built to the `doc` directory (that is ignored by
 git):
 
 ```bash
