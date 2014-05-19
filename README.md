@@ -2,6 +2,7 @@ Monk ID Ruby
 ============
 
 [![Gem Version](https://badge.fury.io/rb/monk-id.png)](http://badge.fury.io/rb/monk-id)
+[![Build Status](https://travis-ci.org/MonkDev/monk-id-ruby.svg?branch=dev)](https://travis-ci.org/MonkDev/monk-id-ruby)
 [![Code Climate](https://codeclimate.com/github/MonkDev/monk-id-ruby.png)](https://codeclimate.com/github/MonkDev/monk-id-ruby)
 [![Dependency Status](https://gemnasium.com/MonkDev/monk-id-ruby.svg)](https://gemnasium.com/MonkDev/monk-id-ruby)
 
