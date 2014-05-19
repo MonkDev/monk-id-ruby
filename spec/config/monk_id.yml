@@ -1,0 +1,15 @@
+test:
+  app_id: ca13c9d1-6600-490e-a448-adb99e2eb906
+  app_secret: 98d7ac3f9e22e52f9f23b83ca791db055acad39a27e17dc7
+
+development:
+  app_id: development_app_id
+  app_secret: development_app_secret
+
+rails:
+  app_id: rails_app_id
+  app_secret: rails_app_secret
+
+sinatra:
+  app_id: sinatra_app_id
+  app_secret: sinatra_app_secret

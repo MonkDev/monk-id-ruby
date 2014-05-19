@@ -1,0 +1,6 @@
+env:
+  app_id: env_app_id
+  app_secret: env_app_secret
+
+required:
+  app_id: required_app_id
