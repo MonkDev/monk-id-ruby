@@ -114,8 +114,8 @@ Testing is done with [RSpec](https://relishapp.com/rspec). To run the tests:
 $ rspec
 ```
 
-[Guard](http://guardgem.org) is also configured to run the tests on changes to
-the code/tests:
+[Guard](http://guardgem.org) is also setup to run the tests on changes to the
+code/tests:
 
 ```bash
 $ guard
@@ -123,6 +123,11 @@ $ guard
 
 [SimpleCov](https://github.com/colszowka/simplecov) automatically generates a
 code coverage report to the `coverage` directory on every run of the test suite.
+
+Continuous integration is setup through [Travis CI](https://travis-ci.org/MonkDev/monk-id-ruby)
+to run the tests against Ruby v1.9.3, v2.0.0, and v2.1.1. The SimpleCov results
+are sent to [Coveralls](https://coveralls.io/r/MonkDev/monk-id-ruby) during CI
+for tracking over time. Badges for both are dispayed at the top of this README.
 
 #### Manual
 
@@ -190,9 +195,9 @@ $ yard
 
 ### Quality
 
-[Code Climate](https://codeclimate.com) is setup to perform continuous code
-quality inspection on every commit. The quality badge is displayed at the top of
-this README, with the [full report available here](https://codeclimate.com/github/MonkDev/monk-id-ruby).
+[Code Climate](https://codeclimate.com/github/MonkDev/monk-id-ruby) is setup to
+perform continuous code quality inspection. The quality badge is displayed at
+the top of this README.
 
 Deployment
 ----------
