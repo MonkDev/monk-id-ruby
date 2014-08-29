@@ -113,7 +113,7 @@ module Monk
 
       # Get the path to the config file from the environment. Supports `ENV`
       # variable, Rails, and Sinatra.
-      # 
+      #
       # @return [String] Path to the config file.
       # @return [nil] If not set by the environment.
       def config_path_from_environment
@@ -128,7 +128,7 @@ module Monk
 
       # Get the environment to load within the config. Supports `ENV` variable,
       # Rails, and Sinatra. Defaults to `development` if none specify.
-      # 
+      #
       # @return [String] Environment name.
       def config_environment
         if ENV['MONK_ID_ENV']
