@@ -129,9 +129,12 @@ $ guard
 code coverage report to the `coverage` directory on every run of the test suite.
 
 Continuous integration is setup through [Travis CI](https://travis-ci.org/MonkDev/monk-id-ruby)
-to run the tests against Ruby v1.9.3, v2.0.0, and v2.1.1. The SimpleCov results
-are sent to [Coveralls](https://coveralls.io/r/MonkDev/monk-id-ruby) during CI
-for tracking over time. Badges for both are dispayed at the top of this README.
+to run the tests against Ruby v1.9.3, v2.0.0, and v2.1.1.
+([Circle CI](https://circleci.com/gh/MonkDev/monk-id-ruby) is also setup to run
+the tests against Ruby v1.9.3, but is backup for now until multiple versions can
+easily be specified.) The SimpleCov results are sent to [Coveralls](https://coveralls.io/r/MonkDev/monk-id-ruby)
+during CI for tracking over time. Badges for both are dispayed at the top of
+this README.
 
 #### Manual
 
