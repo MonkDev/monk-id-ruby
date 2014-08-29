@@ -29,7 +29,7 @@ integration.
 Add the gem to your `Gemfile` if using [Bundler](http://bundler.io):
 
 ```ruby
-gem 'monk-id'
+gem 'monk-id', '~> 1.0'
 ```
 
 ```bash
@@ -98,14 +98,17 @@ and verified.
 Development
 -----------
 
-Start by installing the development dependencies with Bundler:
+[Bundler](http://bundler.io) is used heavily for development, so be sure to have
+it installed along with a version of Ruby.
+
+Once those are installed and working, installing the development dependencies:
 
 ```bash
 $ bundle
 ```
 
 This requires all subsequent commands be prepended with `bundle exec`, which has
-been ommitted for conciseness.
+been ommitted for conciseness going forward.
 
 ### Tests
 
@@ -146,7 +149,7 @@ gem 'monk-id', :path => '/path/to/monk-id-ruby'
 ```
 
 Or configure Bundler to use a local repository instead of the GitHub repository
-(more details [in the documentation](http://bundler.io/v1.5/git.html#local)):
+(more details [in the documentation](http://bundler.io/v1.7/git.html#local)):
 
 ```ruby
 gem 'monk-id', :github => 'MonkDev/monk-id-ruby', :branch => 'master'
@@ -184,8 +187,8 @@ you can preview as you document by starting the YARD server:
 $ yard server --reload
 ```
 
-This hosts the documentation at http://localhost:8808 and automatically watches
-for changes on page refresh.
+This hosts the documentation at [http://localhost:8808](http://localhost:8808)
+and automatically watches for changes on page refresh.
 
 The documentation can also be built to the `doc` directory (that is ignored by
 git):
