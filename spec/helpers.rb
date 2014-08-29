@@ -16,7 +16,9 @@ module Helpers
   end
 
   def valid_payload
-    'eyJ1c2VyIjp7ImVtYWlsIjoianN0YXl0b25AbW9ua2RldmVsb3BtZW50LmNvbSIsImlkIjoiNjJjOTg4YmEtMTNkOC00NzNlLWFkZWItOGY3ZDJjNjI4NDZhIiwic2lnbmF0dXJlIjoiOWlGYStLWHlTZTEvS29uM0hXRitLZlRQVDJ2MVl3QyttVEFBQko0QXpsRWZkNmR0UG1HWWpVend2OUtYXG5vbXJreWFMQi9oQjcrWExHQW41OTlLKzlFdz09XG4ifX0='
+    'eyJ1c2VyIjp7ImVtYWlsIjoianN0YXl0b25AbW9ua2RldmVsb3BtZW50LmNvbSIsImlkIjoiNjJjOTg4YmEtMTNkOC00NzNlLWFkZWItOGY3ZDJj' +
+    'NjI4NDZhIiwic2lnbmF0dXJlIjoiOWlGYStLWHlTZTEvS29uM0hXRitLZlRQVDJ2MVl3QyttVEFBQko0QXpsRWZkNmR0UG1HWWpVend2OUtYXG5v' +
+    'bXJreWFMQi9oQjcrWExHQW41OTlLKzlFdz09XG4ifX0='
   end
 
   def expected_payload
@@ -29,7 +31,9 @@ module Helpers
   end
 
   def invalid_payload
-    'eyJ1c2VyIjp7ImVtYWlsIjoianN0YXl0b25AbW9ua2RldmVsb3BtZW50LmNvbSIsImlkIjoiNjJjOTg4YmEtMTNkOC00NzNlLWFkZWItOGY3ZDJjNjI4NDZhIiwic2lnbmF0dXJlIjoiUlRGcXhIK3dPbzh4V0JGQko0cTNTRnVSc3VOTWxUTE5iak1wTjBFclYxNzh0U3pwS2VlU2J2T29SQzNUXG4zVTkxVCtLK3FQc3JoMjVycEN5QVMrYlFEdz09XG4ifX0='
+    'eyJ1c2VyIjp7ImVtYWlsIjoianN0YXl0b25AbW9ua2RldmVsb3BtZW50LmNvbSIsImlkIjoiNjJjOTg4YmEtMTNkOC00NzNlLWFkZWItOGY3ZDJj' +
+    'NjI4NDZhIiwic2lnbmF0dXJlIjoiUlRGcXhIK3dPbzh4V0JGQko0cTNTRnVSc3VOTWxUTE5iak1wTjBFclYxNzh0U3pwS2VlU2J2T29SQzNUXG4z' +
+    'VTkxVCtLK3FQc3JoMjVycEN5QVMrYlFEdz09XG4ifX0='
   end
 
   def reset_payload
@@ -73,8 +77,8 @@ module Helpers
   def mock_rails
     Object.const_set(:Rails, Class.new)
 
-    Rails.stub(:root) { spec_path }
-    Rails.stub(:env) { 'rails' }
+    allow(Rails).to receive(:root).and_return(spec_path)
+    allow(Rails).to receive(:env).and_return('rails')
   end
 
   def remove_rails
@@ -85,8 +89,8 @@ module Helpers
     Object.const_set(:Sinatra, Module.new)
     Sinatra.const_set(:Application, Module.new)
 
-    Sinatra::Application.stub_chain(:settings, :root) { spec_path }
-    Sinatra::Application.stub_chain(:settings, :environment) { :sinatra }
+    allow(Sinatra::Application).to receive_message_chain(:settings, :root).and_return(spec_path)
+    allow(Sinatra::Application).to receive_message_chain(:settings, :environment).and_return(:sinatra)
   end
 
   def remove_sinatra
