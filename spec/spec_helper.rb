@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 require 'helpers'
 require 'simplecov'
 require 'coveralls'

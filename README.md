@@ -110,19 +110,30 @@ $ bundle
 This requires all subsequent commands be prepended with `bundle exec`, which has
 been ommitted for conciseness going forward.
 
+### Workflow
+
+[Rake](https://github.com/jimweirich/rake) is setup to run the tests and check
+code quality by default:
+
+```bash
+$ rake
+```
+
+[Guard](http://guardgem.org) takes it a step further and automatically runs the
+appropriate tasks on file change:
+
+```bash
+$ guard
+```
+
+It's recommended to run Guard during development.
+
 ### Tests
 
 Testing is done with [RSpec](https://relishapp.com/rspec). To run the tests:
 
 ```bash
-$ rspec
-```
-
-[Guard](http://guardgem.org) is also setup to run the tests on changes to the
-code/tests:
-
-```bash
-$ guard
+$ rake spec
 ```
 
 [SimpleCov](https://github.com/colszowka/simplecov) automatically generates a
@@ -148,14 +159,14 @@ library, if Bundler is used in the test app or website, you can either specify a
 path to the library locally:
 
 ```ruby
-gem 'monk-id', :path => '/path/to/monk-id-ruby'
+gem 'monk-id', path: '/path/to/monk-id-ruby'
 ```
 
 Or configure Bundler to use a local repository instead of the GitHub repository
 (more details [in the documentation](http://bundler.io/v1.7/git.html#local)):
 
 ```ruby
-gem 'monk-id', :github => 'MonkDev/monk-id-ruby', :branch => 'master'
+gem 'monk-id', github: 'MonkDev/monk-id-ruby', branch: 'master'
 ```
 
 ```bash
@@ -202,6 +213,14 @@ $ yard
 
 ### Quality
 
+[RuboCop](https://github.com/bbatsov/rubocop) is configured to enforce the
+[Ruby Style Guide](https://github.com/bbatsov/ruby-style-guide). While Guard is
+setup to run it automatically on file change, it can also be run manually:
+
+```bash
+$ rake quality
+```
+
 [Code Climate](https://codeclimate.com/github/MonkDev/monk-id-ruby) is setup to
 perform continuous code quality inspection. The quality badge is displayed at
 the top of this README.
@@ -221,8 +240,7 @@ These steps can be executed individually, but it's easiest to do all at once:
 $ gem bump --version major|minor|patch --tag --release
 ```
 
-Be sure to choose the correct version by following
-[Semantic Versioning](http://semver.org).
+Be sure to choose the correct version by following [Semantic Versioning](http://semver.org).
 
 ### Publish Documentation
 
