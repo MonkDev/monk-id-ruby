@@ -1,3 +1,6 @@
+# encoding: utf-8
+
+# Helpers that are included in every spec.
 module Helpers
   def spec_path
     File.expand_path(File.dirname(__FILE__))
@@ -16,28 +19,30 @@ module Helpers
   end
 
   def valid_payload
-    'eyJ1c2VyIjp7ImVtYWlsIjoianN0YXl0b25AbW9ua2RldmVsb3BtZW50LmNvbSIsImlkIjoiNjJjOTg4YmEtMTNkOC00NzNlLWFkZWItOGY3ZDJj' +
-    'NjI4NDZhIiwic2lnbmF0dXJlIjoiOWlGYStLWHlTZTEvS29uM0hXRitLZlRQVDJ2MVl3QyttVEFBQko0QXpsRWZkNmR0UG1HWWpVend2OUtYXG5v' +
-    'bXJreWFMQi9oQjcrWExHQW41OTlLKzlFdz09XG4ifX0='
+    'eyJ1c2VyIjp7ImVtYWlsIjoianN0YXl0b25AbW9ua2RldmVsb3BtZW50LmNvbSIsImlkIjoi' \
+    'NjJjOTg4YmEtMTNkOC00NzNlLWFkZWItOGY3ZDJjNjI4NDZhIiwic2lnbmF0dXJlIjoiOWlG' \
+    'YStLWHlTZTEvS29uM0hXRitLZlRQVDJ2MVl3QyttVEFBQko0QXpsRWZkNmR0UG1HWWpVend2' \
+    'OUtYXG5vbXJreWFMQi9oQjcrWExHQW41OTlLKzlFdz09XG4ifX0='
   end
 
   def expected_payload
     {
-      :user => {
-        :id    => '62c988ba-13d8-473e-adeb-8f7d2c62846a',
-        :email => 'jstayton@monkdevelopment.com'
+      user: {
+        id:    '62c988ba-13d8-473e-adeb-8f7d2c62846a',
+        email: 'jstayton@monkdevelopment.com'
       }
     }
   end
 
   def invalid_payload
-    'eyJ1c2VyIjp7ImVtYWlsIjoianN0YXl0b25AbW9ua2RldmVsb3BtZW50LmNvbSIsImlkIjoiNjJjOTg4YmEtMTNkOC00NzNlLWFkZWItOGY3ZDJj' +
-    'NjI4NDZhIiwic2lnbmF0dXJlIjoiUlRGcXhIK3dPbzh4V0JGQko0cTNTRnVSc3VOTWxUTE5iak1wTjBFclYxNzh0U3pwS2VlU2J2T29SQzNUXG4z' +
-    'VTkxVCtLK3FQc3JoMjVycEN5QVMrYlFEdz09XG4ifX0='
+    'eyJ1c2VyIjp7ImVtYWlsIjoianN0YXl0b25AbW9ua2RldmVsb3BtZW50LmNvbSIsImlkIjoi' \
+    'NjJjOTg4YmEtMTNkOC00NzNlLWFkZWItOGY3ZDJjNjI4NDZhIiwic2lnbmF0dXJlIjoiUlRG' \
+    'cXhIK3dPbzh4V0JGQko0cTNTRnVSc3VOTWxUTE5iak1wTjBFclYxNzh0U3pwS2VlU2J2T29S' \
+    'QzNUXG4zVTkxVCtLK3FQc3JoMjVycEN5QVMrYlFEdz09XG4ifX0='
   end
 
   def reset_payload
-    Monk::Id.class_variable_set :@@payload, nil
+    Monk::Id.instance_variable_set(:@payload, nil)
   end
 
   def config_env
@@ -68,7 +73,7 @@ module Helpers
   end
 
   def reset_config
-    Monk::Id.class_variable_set :@@config, nil
+    Monk::Id.instance_variable_set(:@config, nil)
 
     ENV['MONK_ID_CONFIG'] = nil
     ENV['MONK_ID_ENV'] = nil
@@ -89,8 +94,10 @@ module Helpers
     Object.const_set(:Sinatra, Module.new)
     Sinatra.const_set(:Application, Module.new)
 
-    allow(Sinatra::Application).to receive_message_chain(:settings, :root).and_return(spec_path)
-    allow(Sinatra::Application).to receive_message_chain(:settings, :environment).and_return(:sinatra)
+    allow(Sinatra::Application)
+      .to receive_message_chain(:settings, :root).and_return(spec_path)
+    allow(Sinatra::Application)
+      .to receive_message_chain(:settings, :environment).and_return(:sinatra)
   end
 
   def remove_sinatra

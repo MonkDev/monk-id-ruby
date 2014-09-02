@@ -1,4 +1,6 @@
+# encoding: utf-8
+
 source 'https://rubygems.org'
 
-# Specify your gem's dependencies in monk-id.gemspec
+# Specify dependencies in monk-id.gemspec.
 gemspec

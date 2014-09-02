@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 require 'base64'
 require 'json'
 require 'openssl'
@@ -38,9 +40,9 @@ module Monk
 
         config = YAML.load_file(path)[environment]
 
-        verify_config(config)
+        valid_config?(config)
 
-        @@config = config
+        @config = config
       end
 
       # Get a config value. Attempts to load the config if it hasn't already
@@ -50,34 +52,30 @@ module Monk
       # @raise  [StandardError] If the config can't be loaded.
       # @return [*] Config value.
       def config(key)
-        load_config unless @@config
+        load_config unless @config
 
-        @@config[key]
+        @config[key]
       end
 
       # Load a payload from the client-side.
       #
       # @param  encoded_payload [String, #[]] Encoded payload or Hash-like
       #         cookies object to automatically load the payload from.
-      # @return [Hash<Symbol>] Decoded and verified payload. Empty if there's no
-      #         payload or it fails verification.
+      # @return [Hash<Symbol>] Decoded and validate payload. Empty if there's no
+      #         payload or it fails validation.
       def load_payload(encoded_payload = nil)
-        if encoded_payload.is_a? String
-          payload = encoded_payload
-        elsif encoded_payload.respond_to? :[]
-          payload = encoded_payload[COOKIE_NAME]
-        end
+        payload = select_payload(encoded_payload)
 
-        return @@payload = {} unless payload
+        return @payload = {} unless payload
 
         begin
           payload = decode_payload(payload)
-          verified = verify_payload(payload)
+          valid = valid_payload?(payload)
         rescue
-          verified = false
+          valid = false
         end
 
-        @@payload = verified ? payload : {}
+        @payload = valid ? payload : {}
       end
 
       # Get the signed in user's UUID.
@@ -85,7 +83,7 @@ module Monk
       # @return [String] If signed in user.
       # @return [nil] If no signed in user.
       def user_id
-        payload_user :id
+        payload_user(:id)
       end
 
       # Get the signed in user's email address.
@@ -93,23 +91,23 @@ module Monk
       # @return [String] If signed in user.
       # @return [nil] If no signed in user.
       def user_email
-        payload_user :email
+        payload_user(:email)
       end
 
       # Check whether there's a signed in user.
       #
       # @return [Boolean] Whether there's a signed in user.
       def signed_in?
-        !!user_id
+        !user_id.nil?
       end
 
-    protected
+      protected
 
       # Loaded config values.
-      @@config = nil
+      @config = nil
 
       # Loaded payload.
-      @@payload = nil
+      @payload = nil
 
       # Get the path to the config file from the environment. Supports `ENV`
       # variable, Rails, and Sinatra.
@@ -142,17 +140,31 @@ module Monk
         end
       end
 
-      # Verify that a config has all the required values.
+      # Validate that a config has all the required values.
       #
       # @param  config [Hash<String>] Config values.
       # @raise  [RuntimeError] If invalid.
       # @return [true] If valid.
-      def verify_config(config)
-        raise 'no config loaded' unless config
-        raise 'no `app_id` config value' unless config['app_id']
-        raise 'no `app_secret` config value' unless config['app_secret']
+      def valid_config?(config)
+        fail 'no config loaded' unless config
+        fail 'no `app_id` config value' unless config['app_id']
+        fail 'no `app_secret` config value' unless config['app_secret']
 
         true
+      end
+
+      # Select a payload from the first place one can be found.
+      #
+      # @param  encoded_payload [String, #[]] Encoded payload or Hash-like
+      #         cookies object to select the payload from.
+      # @return [String] Encoded payload.
+      # @return [nil] If one can't be found.
+      def select_payload(encoded_payload)
+        if encoded_payload.is_a? String
+          encoded_payload
+        elsif encoded_payload.respond_to? :[]
+          encoded_payload[COOKIE_NAME]
+        end
       end
 
       # Decode a payload from the client-side.
@@ -161,7 +173,7 @@ module Monk
       # @raise  [JSON::ParserError] If invalid JSON.
       # @return [Hash<Symbol>] Decoded payload.
       def decode_payload(encoded_payload)
-        JSON.parse(Base64.decode64(encoded_payload), :symbolize_names => true)
+        JSON.parse(Base64.decode64(encoded_payload), symbolize_names: true)
       end
 
       # Generate the expected signature of a payload using the app's secret.
@@ -172,15 +184,19 @@ module Monk
         payload_clone = payload.clone
         payload_clone[:user].delete(:signature)
 
-        OpenSSL::HMAC.digest(OpenSSL::Digest::SHA512.new, config('app_secret'), JSON.generate(payload_clone[:user]))
+        OpenSSL::HMAC.digest(
+          OpenSSL::Digest::SHA512.new,
+          config('app_secret'),
+          JSON.generate(payload_clone[:user])
+        )
       end
 
-      # Verify that a payload hasn't been tampered with or faked by comparing
+      # Validate that a payload hasn't been tampered with or faked by comparing
       # signatures.
       #
       # @param  payload [Hash<Symbol>] Decoded payload.
-      # @return [Boolean] Whether the payload is legit.
-      def verify_payload(payload)
+      # @return [Boolean] Whether the payload is valid.
+      def valid_payload?(payload)
         signature = Base64.decode64(payload[:user][:signature])
 
         signature == expected_signature(payload)
@@ -189,9 +205,9 @@ module Monk
       # Get the loaded payload.
       #
       # @return [Hash<Symbol>] Loaded payload. Empty if there's no payload or it
-      #         failed verification.
+      #         failed validation.
       def payload
-        @@payload || load_payload
+        @payload || load_payload
       end
 
       # Get a value from the `user` hash of the loaded payload.
@@ -201,11 +217,7 @@ module Monk
       def payload_user(key)
         payload = self.payload
 
-        if payload.key?(:user)
-          payload[:user][key]
-        else
-          nil
-        end
+        payload.key?(:user) ? payload[:user][key] : nil
       end
     end
   end
