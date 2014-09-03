@@ -6,7 +6,7 @@
 <title>
   Module: Monk::Id
   
-    &mdash; Documentation by YARD 0.8.7.3
+    &mdash; Documentation by YARD 0.8.7.4
   
 </title>
 
@@ -17,7 +17,7 @@
 <script type="text/javascript" charset="utf-8">
   hasFrames = window.top.frames.main ? true : false;
   relpath = '../';
-  framesUrl = "../frames.html#!" + escape(window.location.href);
+  framesUrl = "../frames.html#!Monk/Id.html";
 </script>
 
 
@@ -166,7 +166,7 @@ root directory.</p>
 
 </div>
         </dt>
-        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>1.1.0</span><span class='tstring_end'>'</span></span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span></pre></dd>
+        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>1.1.1</span><span class='tstring_end'>'</span></span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span></pre></dd>
       
     </dl>
   
@@ -421,19 +421,19 @@ loaded.</p>
       <pre class="lines">
 
 
-52
-53
 54
 55
-56</pre>
+56
+57
+58</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/monk/id.rb', line 52</span>
+      <pre class="code"><span class="info file"># File 'lib/monk/id.rb', line 54</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_config'>config</span><span class='lparen'>(</span><span class='id identifier rubyid_key'>key</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_load_config'>load_config</span> <span class='kw'>unless</span> <span class='cvar'>@@config</span>
+  <span class='id identifier rubyid_load_config'>load_config</span> <span class='kw'>unless</span> <span class='ivar'>@config</span>
 
-  <span class='cvar'>@@config</span><span class='lbracket'>[</span><span class='id identifier rubyid_key'>key</span><span class='rbracket'>]</span>
+  <span class='ivar'>@config</span><span class='lbracket'>[</span><span class='id identifier rubyid_key'>key</span><span class='rbracket'>]</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -546,8 +546,6 @@ don't need to call this method if the config file is stored at
       <pre class="lines">
 
 
-35
-36
 37
 38
 39
@@ -555,10 +553,12 @@ don't need to call this method if the config file is stored at
 41
 42
 43
-44</pre>
+44
+45
+46</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/monk/id.rb', line 35</span>
+      <pre class="code"><span class="info file"># File 'lib/monk/id.rb', line 37</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_load_config'>load_config</span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_environment'>environment</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_path'>path</span> <span class='op'>||=</span> <span class='id identifier rubyid_config_path_from_environment'>config_path_from_environment</span>
@@ -566,9 +566,9 @@ don't need to call this method if the config file is stored at
 
   <span class='id identifier rubyid_config'>config</span> <span class='op'>=</span> <span class='const'>YAML</span><span class='period'>.</span><span class='id identifier rubyid_load_file'>load_file</span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span><span class='lbracket'>[</span><span class='id identifier rubyid_environment'>environment</span><span class='rbracket'>]</span>
 
-  <span class='id identifier rubyid_verify_config'>verify_config</span><span class='lparen'>(</span><span class='id identifier rubyid_config'>config</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_valid_config?'>valid_config?</span><span class='lparen'>(</span><span class='id identifier rubyid_config'>config</span><span class='rparen'>)</span>
 
-  <span class='cvar'>@@config</span> <span class='op'>=</span> <span class='id identifier rubyid_config'>config</span>
+  <span class='ivar'>@config</span> <span class='op'>=</span> <span class='id identifier rubyid_config'>config</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -629,8 +629,8 @@ payload from.</p>
       
         &mdash;
         <div class='inline'>
-<p>Decoded and verified payload. Empty if there’s no payload or it fails
-verification.</p>
+<p>Decoded and validate payload. Empty if there’s no payload or it fails
+validation.</p>
 </div>
       
     </li>
@@ -643,8 +643,6 @@ verification.</p>
       <pre class="lines">
 
 
-64
-65
 66
 67
 68
@@ -658,30 +656,24 @@ verification.</p>
 76
 77
 78
-79
-80
-81</pre>
+79</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/monk/id.rb', line 64</span>
+      <pre class="code"><span class="info file"># File 'lib/monk/id.rb', line 66</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_load_payload'>load_payload</span><span class='lparen'>(</span><span class='id identifier rubyid_encoded_payload'>encoded_payload</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
-  <span class='kw'>if</span> <span class='id identifier rubyid_encoded_payload'>encoded_payload</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span> <span class='const'>String</span>
-    <span class='id identifier rubyid_payload'>payload</span> <span class='op'>=</span> <span class='id identifier rubyid_encoded_payload'>encoded_payload</span>
-  <span class='kw'>elsif</span> <span class='id identifier rubyid_encoded_payload'>encoded_payload</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span> <span class='symbol'>:[]</span>
-    <span class='id identifier rubyid_payload'>payload</span> <span class='op'>=</span> <span class='id identifier rubyid_encoded_payload'>encoded_payload</span><span class='lbracket'>[</span><span class='const'>COOKIE_NAME</span><span class='rbracket'>]</span>
-  <span class='kw'>end</span>
+  <span class='id identifier rubyid_payload'>payload</span> <span class='op'>=</span> <span class='id identifier rubyid_select_payload'>select_payload</span><span class='lparen'>(</span><span class='id identifier rubyid_encoded_payload'>encoded_payload</span><span class='rparen'>)</span>
 
-  <span class='kw'>return</span> <span class='cvar'>@@payload</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span> <span class='kw'>unless</span> <span class='id identifier rubyid_payload'>payload</span>
+  <span class='kw'>return</span> <span class='ivar'>@payload</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span> <span class='kw'>unless</span> <span class='id identifier rubyid_payload'>payload</span>
 
   <span class='kw'>begin</span>
     <span class='id identifier rubyid_payload'>payload</span> <span class='op'>=</span> <span class='id identifier rubyid_decode_payload'>decode_payload</span><span class='lparen'>(</span><span class='id identifier rubyid_payload'>payload</span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_verified'>verified</span> <span class='op'>=</span> <span class='id identifier rubyid_verify_payload'>verify_payload</span><span class='lparen'>(</span><span class='id identifier rubyid_payload'>payload</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_valid'>valid</span> <span class='op'>=</span> <span class='id identifier rubyid_valid_payload?'>valid_payload?</span><span class='lparen'>(</span><span class='id identifier rubyid_payload'>payload</span><span class='rparen'>)</span>
   <span class='kw'>rescue</span>
-    <span class='id identifier rubyid_verified'>verified</span> <span class='op'>=</span> <span class='kw'>false</span>
+    <span class='id identifier rubyid_valid'>valid</span> <span class='op'>=</span> <span class='kw'>false</span>
   <span class='kw'>end</span>
 
-  <span class='cvar'>@@payload</span> <span class='op'>=</span> <span class='id identifier rubyid_verified'>verified</span> <span class='op'>?</span> <span class='id identifier rubyid_payload'>payload</span> <span class='op'>:</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
+  <span class='ivar'>@payload</span> <span class='op'>=</span> <span class='id identifier rubyid_valid'>valid</span> <span class='op'>?</span> <span class='id identifier rubyid_payload'>payload</span> <span class='op'>:</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -732,15 +724,15 @@ verification.</p>
       <pre class="lines">
 
 
-102
-103
-104</pre>
+100
+101
+102</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/monk/id.rb', line 102</span>
+      <pre class="code"><span class="info file"># File 'lib/monk/id.rb', line 100</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_signed_in?'>signed_in?</span>
-  <span class='op'>!</span><span class='op'>!</span><span class='id identifier rubyid_user_id'>user_id</span>
+  <span class='op'>!</span><span class='id identifier rubyid_user_id'>user_id</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -805,15 +797,15 @@ verification.</p>
       <pre class="lines">
 
 
-95
-96
-97</pre>
+93
+94
+95</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/monk/id.rb', line 95</span>
+      <pre class="code"><span class="info file"># File 'lib/monk/id.rb', line 93</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_user_email'>user_email</span>
-  <span class='id identifier rubyid_payload_user'>payload_user</span> <span class='symbol'>:email</span>
+  <span class='id identifier rubyid_payload_user'>payload_user</span><span class='lparen'>(</span><span class='symbol'>:email</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -878,15 +870,15 @@ verification.</p>
       <pre class="lines">
 
 
-87
-88
-89</pre>
+85
+86
+87</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/monk/id.rb', line 87</span>
+      <pre class="code"><span class="info file"># File 'lib/monk/id.rb', line 85</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_user_id'>user_id</span>
-  <span class='id identifier rubyid_payload_user'>payload_user</span> <span class='symbol'>:id</span>
+  <span class='id identifier rubyid_payload_user'>payload_user</span><span class='lparen'>(</span><span class='symbol'>:id</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -898,9 +890,9 @@ verification.</p>
 </div>
 
     <div id="footer">
-  Generated on Tue Mar 25 17:07:22 2014 by
+  Generated on Wed Sep  3 11:31:00 2014 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.7.3 (ruby-1.9.3).
+  0.8.7.4 (ruby-1.9.3).
 </div>
 
   </body>
