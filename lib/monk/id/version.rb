@@ -8,6 +8,6 @@ module Monk
   # @author Monk Development, Inc.
   module Id
     # Current version of the library.
-    VERSION = '1.1.0'.freeze
+    VERSION = '1.1.1'.freeze
   end
 end
