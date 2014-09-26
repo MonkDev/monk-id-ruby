@@ -101,7 +101,7 @@ Development
 [Bundler](http://bundler.io) is used heavily for development, so be sure to have
 it installed along with a version of Ruby.
 
-Once those are installed and working, installing the development dependencies:
+Once those are installed and working, install the development dependencies:
 
 ```bash
 $ bundle
