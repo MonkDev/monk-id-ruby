@@ -196,7 +196,7 @@ describe Monk::Id do
     after(:all) { reset_payload }
 
     describe '.signed_in?' do
-      it { expect(described_class.signed_in?).to be }
+      it { expect(described_class.signed_in?).to eq(true) }
     end
 
     describe '.user_email' do
@@ -215,7 +215,7 @@ describe Monk::Id do
 
   context 'when signed out' do
     describe '.signed_in?' do
-      it { expect(described_class.signed_in?).not_to be }
+      it { expect(described_class.signed_in?).to eq(false) }
     end
 
     describe '.user_email' do
