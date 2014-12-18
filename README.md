@@ -1,12 +1,12 @@
 Monk ID Ruby
 ============
 
-[![Gem Version](https://badge.fury.io/rb/monk-id.png)](http://badge.fury.io/rb/monk-id)
-[![Build Status](https://travis-ci.org/MonkDev/monk-id-ruby.svg?branch=dev)](https://travis-ci.org/MonkDev/monk-id-ruby)
-[![Code Climate](https://codeclimate.com/github/MonkDev/monk-id-ruby.png)](https://codeclimate.com/github/MonkDev/monk-id-ruby)
-[![Coverage Status](https://coveralls.io/repos/MonkDev/monk-id-ruby/badge.png?branch=dev)](https://coveralls.io/r/MonkDev/monk-id-ruby?branch=dev)
-[![Inline docs](http://inch-ci.org/github/MonkDev/monk-id-ruby.png)](http://inch-ci.org/github/MonkDev/monk-id-ruby)
-[![Dependency Status](https://gemnasium.com/MonkDev/monk-id-ruby.svg)](https://gemnasium.com/MonkDev/monk-id-ruby)
+[![Gem Version](https://img.shields.io/gem/v/monk-id.svg?style=flat)](http://badge.fury.io/rb/monk-id)
+[![Build Status](https://img.shields.io/travis/MonkDev/monk-id-ruby/dev.svg?style=flat)](https://travis-ci.org/MonkDev/monk-id-ruby)
+[![Code Climate](https://img.shields.io/codeclimate/github/MonkDev/monk-id-ruby.svg?style=flat)](https://codeclimate.com/github/MonkDev/monk-id-ruby)
+[![Coverage Status](https://img.shields.io/coveralls/MonkDev/monk-id-ruby/dev.svg?style=flat)](https://coveralls.io/r/MonkDev/monk-id-ruby?branch=dev)
+[![Dependency Status](https://img.shields.io/gemnasium/MonkDev/monk-id-ruby.svg?style=flat)](https://gemnasium.com/MonkDev/monk-id-ruby)
+[![Inline docs](http://inch-ci.org/github/MonkDev/monk-id-ruby.svg?branch=dev&style=flat)](http://inch-ci.org/github/MonkDev/monk-id-ruby)
 
 Integrate Monk ID authentication and single sign-on for apps and websites on the
 server-side.
