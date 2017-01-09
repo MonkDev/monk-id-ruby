@@ -1,1 +1,6 @@
 require: rubocop-rspec
+
+RSpec/MessageChain:
+  Enabled: false
+RSpec/NestedGroups:
+  MaxNesting: 4

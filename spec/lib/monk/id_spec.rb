@@ -26,7 +26,7 @@ describe Monk::Id do
     end
 
     context 'when a config is not loaded' do
-      before(:each) { reset_config }
+      before { reset_config }
       after(:all) { load_config }
 
       it 'loads a config from the environment' do
@@ -38,7 +38,7 @@ describe Monk::Id do
   end
 
   describe '.load_config' do
-    before(:each) { reset_config }
+    before { reset_config }
     after(:all) { load_config }
 
     describe '(path)' do
@@ -99,8 +99,8 @@ describe Monk::Id do
     end
 
     context 'when the environment is Rails' do
-      before(:each) { mock_rails }
-      after(:each) { remove_rails }
+      before { mock_rails }
+      after { remove_rails }
 
       context 'when the path is not specified' do
         it 'loads ::CONFIG_FILE relative to Rails' do
@@ -118,8 +118,8 @@ describe Monk::Id do
     end
 
     context 'when the environment is Sinatra' do
-      before(:each) { mock_sinatra }
-      after(:each) { remove_sinatra }
+      before { mock_sinatra }
+      after { remove_sinatra }
 
       context 'when the path is not specified' do
         it 'loads ::CONFIG_FILE relative to Sinatra' do
@@ -156,7 +156,7 @@ describe Monk::Id do
   end
 
   describe '.load_payload' do
-    before(:each) { reset_payload }
+    before { reset_payload }
     after(:all) { reset_payload }
 
     context 'when the payload is valid' do
