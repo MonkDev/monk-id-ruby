@@ -2,6 +2,10 @@ machine:
   ruby:
     version: 2.3.1
 
+general:
+  artifacts:
+    - "coverage"
+
 test:
   override:
     - bundle exec rake spec
