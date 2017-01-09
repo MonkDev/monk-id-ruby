@@ -4,3 +4,5 @@ RSpec/MessageChain:
   Enabled: false
 RSpec/NestedGroups:
   MaxNesting: 4
+Style/FrozenStringLiteralComment:
+  Enabled: false
