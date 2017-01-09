@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 # Global Monk namespace.
 module Monk
   # Integrate Monk ID on the server-side by accessing payloads from the

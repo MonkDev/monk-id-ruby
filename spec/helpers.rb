@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 # Helpers that are included in every spec.
 module Helpers
   def spec_path
