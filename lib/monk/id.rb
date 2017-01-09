@@ -146,9 +146,9 @@ module Monk
       # @raise  [RuntimeError] If invalid.
       # @return [true] If valid.
       def valid_config?(config)
-        fail 'no config loaded' unless config
-        fail 'no `app_id` config value' unless config['app_id']
-        fail 'no `app_secret` config value' unless config['app_secret']
+        raise 'no config loaded' unless config
+        raise 'no `app_id` config value' unless config['app_id']
+        raise 'no `app_secret` config value' unless config['app_secret']
 
         true
       end
