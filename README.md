@@ -18,7 +18,7 @@ Overview
 
 Monk ID authentication and single sign-on works in the browser by integrating
 [Monk ID JS](https://github.com/MonkDev/monk-id-js). Only being able to check
-whether a user is signed in on the client-side is limiting, however, which is
+whether a user is logged in on the client-side is limiting, however, which is
 where this library is helpful. It takes a payload from the client-side
 JavaScript and decodes it for access in your Ruby code. There is no Monk ID API
 that can be accessed on the server-side, so this library depends on client-side
@@ -79,10 +79,10 @@ Loading the payload must be done before trying to access any values stored in
 the payload. In Rails, this usually means placing it in a `before_action` in
 your `ApplicationController`.
 
-Once the payload is loaded, you can ask whether the user is signed in:
+Once the payload is loaded, you can ask whether the user is logged in:
 
 ```ruby
-Monk::Id.signed_in?
+Monk::Id.logged_in?
 ```
 
 Or for their ID and email:
@@ -92,7 +92,7 @@ Monk::Id.user_id
 Monk::Id.user_email
 ```
 
-`nil` is returned if the user isn't signed in or the payload can't be decoded
+`nil` is returned if the user isn't logged in or the payload can't be decoded
 and verified.
 
 Development

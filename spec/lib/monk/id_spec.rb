@@ -189,12 +189,12 @@ describe Monk::Id do
     end
   end
 
-  context 'when signed in' do
+  context 'when logged in' do
     before(:all) { described_class.load_payload(valid_payload) }
     after(:all) { reset_payload }
 
-    describe '.signed_in?' do
-      it { expect(described_class.signed_in?).to eq(true) }
+    describe '.logged_in?' do
+      it { expect(described_class.logged_in?).to eq(true) }
     end
 
     describe '.user_email' do
@@ -211,9 +211,9 @@ describe Monk::Id do
     end
   end
 
-  context 'when signed out' do
-    describe '.signed_in?' do
-      it { expect(described_class.signed_in?).to eq(false) }
+  context 'when logged out' do
+    describe '.logged_in?' do
+      it { expect(described_class.logged_in?).to eq(false) }
     end
 
     describe '.user_email' do
@@ -222,6 +222,12 @@ describe Monk::Id do
 
     describe '.user_id' do
       it { expect(described_class.user_id).to be_nil }
+    end
+  end
+
+  describe '.signed_in?' do
+    it 'is deprecated in favor of .logged_in?' do
+      expect(described_class.signed_in?).to eq(described_class.logged_in?)
     end
   end
 end
