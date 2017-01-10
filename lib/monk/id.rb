@@ -76,28 +76,31 @@ module Monk
         @payload = valid ? payload : {}
       end
 
-      # Get the signed in user's UUID.
+      # Get the logged in user's UUID.
       #
-      # @return [String] If signed in user.
-      # @return [nil] If no signed in user.
+      # @return [String] If logged in user.
+      # @return [nil] If no logged in user.
       def user_id
         payload_user(:id)
       end
 
-      # Get the signed in user's email address.
+      # Get the logged in user's email address.
       #
-      # @return [String] If signed in user.
-      # @return [nil] If no signed in user.
+      # @return [String] If logged in user.
+      # @return [nil] If no logged in user.
       def user_email
         payload_user(:email)
       end
 
-      # Check whether there's a signed in user.
+      # Check whether there's a logged in user.
       #
-      # @return [Boolean] Whether there's a signed in user.
-      def signed_in?
+      # @return [Boolean] Whether there's a logged in user.
+      def logged_in?
         !user_id.nil?
       end
+
+      # @deprecated Since v1.2.0. Use {#logged_in?}.
+      alias signed_in? logged_in?
 
       protected
 
