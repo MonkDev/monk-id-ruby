@@ -101,7 +101,7 @@ Development
 [Bundler](http://bundler.io) is used heavily for development, so be sure to have
 it installed along with a version of Ruby.
 
-Once those are installed and working, install the development dependencies:
+Once those are installed and working, install the dependencies:
 
 ```bash
 $ bundle
@@ -110,23 +110,12 @@ $ bundle
 This requires all subsequent commands be prepended with `bundle exec`, which has
 been ommitted for conciseness going forward.
 
-### Workflow
-
-[Rake](https://github.com/jimweirich/rake) is setup to run the tests and check
-code quality by default:
+[Rake](https://github.com/jimweirich/rake) is used for task running. The tests
+are run and code quality is checked by default:
 
 ```bash
 $ rake
 ```
-
-[Guard](http://guardgem.org) takes it a step further and automatically runs the
-appropriate tasks on file change:
-
-```bash
-$ guard
-```
-
-It's recommended to run Guard during development.
 
 ### Tests
 
@@ -213,8 +202,7 @@ $ yard
 ### Quality
 
 [RuboCop](https://github.com/bbatsov/rubocop) is configured to enforce the
-[Ruby Style Guide](https://github.com/bbatsov/ruby-style-guide). While Guard is
-setup to run it automatically on file change, it can also be run manually:
+[Ruby Style Guide](https://github.com/bbatsov/ruby-style-guide). To run:
 
 ```bash
 $ rake quality
