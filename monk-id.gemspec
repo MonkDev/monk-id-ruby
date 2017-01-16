@@ -21,7 +21,7 @@ Gem::Specification.new do |spec|
   spec.required_ruby_version = '>= 1.9.3'
 
   spec.add_development_dependency 'bundler', '~> 1.6'
-  spec.add_development_dependency 'coveralls', '~> 0.8.17'
+  spec.add_development_dependency 'codecov', '~> 0.1.9'
   spec.add_development_dependency 'gem-release', '~> 0.7.4'
   spec.add_development_dependency 'rake', '~> 12.0.0'
   spec.add_development_dependency 'redcarpet', '~> 3.4.0'

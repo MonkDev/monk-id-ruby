@@ -4,7 +4,7 @@ machine:
 
 general:
   artifacts:
-    - "coverage"
+    - coverage
 
 test:
   override:
