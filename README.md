@@ -4,7 +4,7 @@ Monk ID Ruby
 [![Gem Version](https://img.shields.io/gem/v/monk-id.svg?style=flat)](http://badge.fury.io/rb/monk-id)
 [![Build Status](https://img.shields.io/travis/MonkDev/monk-id-ruby/dev.svg?style=flat)](https://travis-ci.org/MonkDev/monk-id-ruby)
 [![Code Climate](https://img.shields.io/codeclimate/github/MonkDev/monk-id-ruby.svg?style=flat)](https://codeclimate.com/github/MonkDev/monk-id-ruby)
-[![Coverage Status](https://img.shields.io/coveralls/MonkDev/monk-id-ruby/dev.svg?style=flat)](https://coveralls.io/r/MonkDev/monk-id-ruby?branch=dev)
+[![codecov](https://codecov.io/gh/MonkDev/monk-id-ruby/branch/dev/graph/badge.svg)](https://codecov.io/gh/MonkDev/monk-id-ruby)
 [![Dependency Status](https://img.shields.io/gemnasium/MonkDev/monk-id-ruby.svg?style=flat)](https://gemnasium.com/MonkDev/monk-id-ruby)
 [![Inline docs](http://inch-ci.org/github/MonkDev/monk-id-ruby.svg?branch=dev&style=flat)](http://inch-ci.org/github/MonkDev/monk-id-ruby)
 
@@ -131,8 +131,8 @@ code coverage report to the `coverage` directory on every run of the test suite.
 Continuous integration is setup through [Travis CI](https://travis-ci.org/MonkDev/monk-id-ruby)
 to run the tests against Ruby v2.3 and v2.4. ([Circle CI](https://circleci.com/gh/MonkDev/monk-id-ruby)
 is also setup to run the tests against Ruby v2.3, but is backup for now until
-multiple versions can easily be specified.) The SimpleCov results are sent to
-[Coveralls](https://coveralls.io/r/MonkDev/monk-id-ruby) during CI for tracking
+multiple versions can easily be specified.) The code coverage results are sent
+to [Codecov](https://codecov.io/gh/MonkDev/monk-id-ruby) during CI for tracking
 over time. Badges for both are dispayed at the top of this README.
 
 #### Manual
